@@ -1,6 +1,6 @@
 # Expensive Reinbursement Form
 
-## This is for "The Curve", part of the work experience period.
+## "The Curve" - Work Experience
 
 ### Dates: 1st July - 5th July
 
