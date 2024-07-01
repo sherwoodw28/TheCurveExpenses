@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample Form with File Upload</title>
+    <link rel="stylesheet" href="approvalcss.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Approval Form</h2>
+        <form id="sampleForm">
+
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            
+            <label for="reason">Reason for Request:</label>
+            <input type="reason" id="reason" name="reason" required>
+            
+            <label for="details">Full Details of Request: <br>(starting location, destination time, transport required, etc)</label>
+            <input type="details" id="details" name="details" required>
+
+            <label for="dateNeededFrom">Date Required from: (dd/mm/yyyy)</label>
+            <input type="dateNeededFrom" id="dateNeededFrom" name="dateNeededFrom" required>
+
+            <label for="dateNeededTo">End date: (dd/mm/yyyy)</label>
+            <input type="dateNeededTo" id="dateNeededTo" name="dateNeededTo" required>
+
+            <label for="totalCost">Total Cost: (only applicable to Employees directly making the booking)</label>
+            <input type="totalCost" id="totalCost" name="totalCost" required>
+
+            <label for="assistance">Do you require assistance with your booking? (including making the payment)</label>
+            <select id="assistance" name="assistance" required>
+                <option value="">Select an option</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select>
+
+            <label for="comments">Any additional coments?</label>
+            <input type="comments" id="comments" name="comments" required>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+    <script src="approvaljs.js"></script>
+</body>
+</html>
