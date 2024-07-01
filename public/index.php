@@ -16,7 +16,7 @@
                 header('location: /dashboard');
                 exit();
             } else{
-                header('location: /dashboard');
+                header('location: /login');
                 exit();
             }
         }
