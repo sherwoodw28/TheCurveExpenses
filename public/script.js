@@ -32,17 +32,48 @@ document.addEventListener("DOMContentLoaded", () => {
         createAccountForm.classList.add("form--hidden");
     });
 
-    loginForm.addEventListener("submit", async (e)=> {
+    loginForm.addEventListener("submit", async (e) => {
         e.preventDefault();
-
-        // Perform your AJAX/Fetch login
-        const request = await fetch("/api/account/login", {
-            method: "POST",
-            body: JSON.stringify({ email: document.querySelector('[placeholder="Email"]').value, password: document.querySelector('[placeholder="Password"]').value })
-          });
-          
-        setFormMessage(loginForm, "error", "Invalid username/password combination");
+    
+        try {
+            // Get the values from the form inputs
+            const email = document.querySelector('[placeholder="Email"]').value;
+            const password = document.querySelector('[placeholder="Password"]').value;
+    
+            // Perform your AJAX/Fetch login
+            const request = await fetch("/api/account/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ email, password })
+            });
+    
+            // Check if the request was successful
+            if (!request.ok) {
+                throw new Error('Network response was not ok');
+            }
+    
+            // Parse the response as JSON
+            const response = await request.json();
+    
+            console.log(response);
+    
+            // Check for errors in the response and set the form message accordingly
+            if (response.error) {
+                setFormMessage(loginForm, "error", response.error);
+            } else {
+                // Handle success (e.g., redirect to another page)
+                console.log("Login successful!");
+                // Redirect to another page or perform some other action
+                // window.location.href = "/some-other-page";
+            }
+        } catch (error) {
+            console.error('There was a problem with the fetch operation:', error);
+            setFormMessage(loginForm, "error", "An error occurred during login.");
+        }
     });
+    
 
     document.querySelectorAll(".form__input").forEach(inputElement => {
         inputElement.addEventListener("blur", e => {
