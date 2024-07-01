@@ -10,23 +10,39 @@ if ($conn->connect_error) {
 }
 
 // Connection success
-function executePreparedStatement($sql, $param) {
+function executePreparedStatement($sql, $params) {
     global $conn;
-    $stmt = $conn->prepare($sql);
-    if ($stmt === false) {
-        // Handle errors here, e.g., log the error
-        echo "Error preparing statement: " . $conn->error;
+
+    // Ensure $conn is a valid mysqli instance
+    if (!$conn instanceof mysqli) {
+        error_log("Database connection is not a valid mysqli instance.");
         return false;
     }
 
-    // Bind parameters (s stands for string, adjust if needed)
-    $stmt->bind_param('s', $param);
+    try {
+        $stmt = $conn->prepare($sql);
+        if ($stmt === false) {
+            error_log("Failed to prepare the statement: " . $conn->error);
+            return false;
+        }
 
-    if (!$stmt->execute()) {
-        // Handle execution errors
-        echo "Error executing statement: " . $stmt->error;
+        // Bind parameters
+        if ($params) {
+            // Create a string with the types of the parameters
+            $types = str_repeat('s', count($params)); // assuming all parameters are strings for simplicity
+            $stmt->bind_param($types, ...$params);
+        }
+
+        // Execute the statement
+        if ($stmt->execute()) {
+            return $stmt;
+        } else {
+            error_log("Failed to execute the statement: " . $stmt->error);
+            return false;
+        }
+    } catch (mysqli_sql_exception $e) {
+        // Log detailed error message
+        error_log("Error executing prepared statement: " . $e->getMessage());
         return false;
     }
-
-    return $stmt;
 }

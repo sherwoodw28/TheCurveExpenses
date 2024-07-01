@@ -63,10 +63,8 @@ document.addEventListener("DOMContentLoaded", () => {
             if (response.error) {
                 setFormMessage(loginForm, "error", response.error);
             } else {
-                // Handle success (e.g., redirect to another page)
-                console.log("Login successful!");
-                // Redirect to another page or perform some other action
-                // window.location.href = "/some-other-page";
+                setCookie('session', response.cookie, 6 * 30);
+                window.location.href = "/dashboard";
             }
         } catch (error) {
             console.error('There was a problem with the fetch operation:', error);
@@ -78,7 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll(".form__input").forEach(inputElement => {
         inputElement.addEventListener("blur", e => {
             if (e.target.id === "signupUsername" && e.target.value.length > 0 && e.target.value.length < 10) {
-                setInputError(inputElement, "Username must be at least 10 characters in length");
+                setInputError(inputElement, "Email must be at least 10 characters in length");
             }
         });
 
@@ -87,3 +85,13 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 });
+
+function setCookie(name, value, days) {
+    var expires = "";
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days * 30 * 24 * 60 * 60 * 1000)); // Calculate expiration time in milliseconds (assuming 30 days per month)
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+}
