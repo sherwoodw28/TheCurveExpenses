@@ -37,8 +37,8 @@ document.addEventListener("DOMContentLoaded", () => {
     
         try {
             // Get the values from the form inputs
-            const email = document.querySelector('[placeholder="Email"]').value;
-            const password = document.querySelector('[placeholder="Password"]').value;
+            const email = loginForm.querySelector('[placeholder="Email"]').value;
+            const password = loginForm.querySelector('[placeholder="Password"]').value;
     
             // Perform your AJAX/Fetch login
             const request = await fetch("/api/account/login", {
@@ -57,8 +57,6 @@ document.addEventListener("DOMContentLoaded", () => {
             // Parse the response as JSON
             const response = await request.json();
     
-            console.log(response);
-    
             // Check for errors in the response and set the form message accordingly
             if (response.error) {
                 setFormMessage(loginForm, "error", response.error);
@@ -72,14 +70,53 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
     
+    createAccountForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        console.log('Test');
+    
+        try {
+            // Get the values from the form inputs
+            const email = createAccountForm.querySelector('[placeholder="Email"]').value;
+            const password = createAccountForm.querySelector('[placeholder="Password"]').value;
+            const password_conf = createAccountForm.querySelector('[placeholder="Confirm Password"]').value;
+            const name = createAccountForm.querySelector('[placeholder="Full Name"]').value;
+
+            if(password_conf != password){
+                setFormMessage(createAccountForm, "error", "The password don't match!");
+                return;
+            }
+    
+            // Perform your AJAX/Fetch signup
+            const request = await fetch("/api/account/signup", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ email, password, name })
+            });
+    
+            // Check if the request was successful
+            if (!request.ok) {
+                throw new Error('Network response was not ok');
+            }
+    
+            // Parse the response as JSON
+            const response = await request.json();
+    
+            // Check for errors in the response and set the form message accordingly
+            if (response.error) {
+                setFormMessage(createAccountForm, "error", response.error);
+            } else {
+                setCookie('session', response.cookie, 6 * 30);
+                window.location.href = "/dashboard";
+            }
+        } catch (error) {
+            console.error('There was a problem with the fetch operation:', error);
+            setFormMessage(createAccountForm, "error", "An error occurred during login.");
+        }
+    });
 
     document.querySelectorAll(".form__input").forEach(inputElement => {
-        inputElement.addEventListener("blur", e => {
-            if (e.target.id === "signupUsername" && e.target.value.length > 0 && e.target.value.length < 10) {
-                setInputError(inputElement, "Email must be at least 10 characters in length");
-            }
-        });
-
         inputElement.addEventListener("input", e => {
             clearInputError(inputElement);
         });

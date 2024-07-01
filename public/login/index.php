@@ -57,7 +57,7 @@
                 <div class="form__input-error-message"></div>
             </div>
             <div class="form__input-group">
-                <input type="text" class="form__input" autofocus placeholder="Email Address">
+                <input type="email" class="form__input" autofocus placeholder="Email">
                 <div class="form__input-error-message"></div>
             </div>
             <div class="form__input-group">
@@ -65,7 +65,7 @@
                 <div class="form__input-error-message"></div>
             </div>
             <div class="form__input-group">
-                <input type="password" class="form__input" autofocus placeholder="Confirm password">
+                <input type="password" class="form__input" autofocus placeholder="Confirm Password">
                 <div class="form__input-error-message"></div>
             </div>
             <button class="form__button" type="submit">Continue</button>

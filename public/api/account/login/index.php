@@ -11,6 +11,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get the email
     $email = $data['email'];
 
+    // Check that it is a valid email
+    function validateEmail($email) {
+        $pattern = '/^[\w\.-]+@[\w\.-]+\.[a-zA-Z]{2,4}$/';
+        return preg_match($pattern, $email) === 1;
+    }
+
+    if (!validateEmail($email)) {
+        echo json_encode([
+            'status' => 'error',
+            'error' => 'Please enter a valid email'
+        ]);
+        exit();
+    }
+
     // Pull the data from the database
     require(dirname(__FILE__).'/../../../../private/database.php');
 
@@ -63,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 function encryptPassword($password, $hash){
-    $secret_key = "ydygfuireytdfviute65yf5et"+$hash;
+    $secret_key = "ydygfuireytdfviute65yf5et".$hash;
     $cipher = "aes-256-cbc";
     $options = 0;
     $iv = "74hf8rh3ng06hdgr";
