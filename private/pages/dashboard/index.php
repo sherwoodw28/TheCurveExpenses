@@ -12,7 +12,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-    <link rel="stylesheet" href="/assets/dashboard/dashboard.css">
+    <link rel="stylesheet" href="/assets/dashboard/style.css">
 </head>
 <body>
     <div class="container">
@@ -68,6 +68,6 @@
             </section>
         </main>
     </div>
-    <script src="/assets/dashboard/dashboard.js"></script>
+    <script src="/assets/dashboard/style.js"></script>
 </body>
 </html>
