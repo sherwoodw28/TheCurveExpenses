@@ -1,41 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
- 
+
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="profilecss.css">
+    <title>User Profile</title>
 </head>
- 
+
 <body>
     <div class="container">
         <div class="user-image">
-            <img src=https://images.app.goo.gl/NCw5w2ETpmiBuVK67 >
+            <img src="profile_picture.webp" alt="User Image">
         </div>
         <div class="content">
-            <label for="Name"></label>
-            <input type="text" id="Name" name="Name" placeholder="name">
-            <br> <br> <br>
-
-            <label for="manager">Choose a manager:</label> <br>
-
+            <label for="Name">Name:</label>
+            <input type="text" id="Name" name="Name" placeholder="Enter your name">
+            
+            <label for="manager">Choose a manager:</label>
             <select name="manager" id="manager">
-            <option value="1">Manager 1</option>
-            <option value="2">Manager 2</option>
-            <option value="3">Manager 3</option>
-            <option value="4">Manager 4</option>
-            <option value="5">Manager 5</option>
+                <option value="1">Manager 1</option>
+                <option value="2">Manager 2</option>
+                <option value="3">Manager 3</option>
+                <option value="4">Manager 4</option>
+                <option value="5">Manager 5</option>
             </select>
-            <br><br><br>
-
-            <a href="resetpass.html">
-                <button>Change Password</button>
+            
+            <a href="resetpass.html" class="change-password-link">
+                Change Password
             </a>
-
         </div>
     </div>
 
-    <script src="https://kit.fontawesome.com/704ff50790.js"
-            crossorigin="anonymous">
-    </script>
+    <script src="https://kit.fontawesome.com/704ff50790.js" crossorigin="anonymous"></script>
 </body>
- 
+
 </html>
