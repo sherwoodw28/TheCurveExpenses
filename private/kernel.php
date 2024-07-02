@@ -58,11 +58,16 @@ class Website {
         exit();
     }
     public function loginRedirect($type){
-        if(!$this->getUser() && $type == 1){
+        $user = $this->getUser();
+        if($user && !$user['verified'] && $type != 3){
+            header('location: /not-verified');
+            exit();
+        }
+        if(!$user && $type == 1){
             header('location: /login');
             exit();
         }
-        if($this->getUser() && $type == 2){
+        if($user && $type == 2){
             header('location: /dashboard');
             exit();
         }

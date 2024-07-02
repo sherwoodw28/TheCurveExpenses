@@ -1,7 +1,6 @@
 <?php
     global $website;
     $website->loginRedirect(1);
-    $website->getUser();
 
     $accountTools = new AccountTools;
 ?>

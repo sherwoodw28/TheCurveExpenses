@@ -1,3 +1,10 @@
+<?php
+    global $website;
+    $website->loginRedirect(1);
+
+    $accountTools = new AccountTools;
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,11 +18,10 @@
 <body>
     <div class="container">
         <div class="user-image">
-            <img src="profile_picture.webp" alt="User Image">
+            <img src="<?php echo $accountTools->getPFP($website->getUser()['email']);?>" alt="User Image">
         </div>
         <div class="content">
-            <label for="Name">Name:</label>
-            <input type="text" id="Name" name="Name" placeholder="Enter your name">
+            <input type="text" id="Name" name="Name" placeholder="<?php echo $website->getUser()['first_name'];?>" value="<?php echo $website->getUser()['first_name'];?>">
             
             <label for="manager">Choose a manager:</label>
             <select name="manager" id="manager">
