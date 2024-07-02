@@ -1,4 +1,4 @@
-# Expensive Reinbursement Form
+# Expense Reinbursement Form
 
 ## "The Curve" - Work Experience
 
