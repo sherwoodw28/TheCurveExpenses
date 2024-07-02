@@ -67,6 +67,9 @@ class Website {
             exit();
         }
     }
+    public function logout(){
+        setcookie("session", "", time() - 3600, "/");
+    }
 }
 class Database {
     private $env;
@@ -163,13 +166,24 @@ class AccountTools{
     public function generateRandom($len){
         return substr(str_shuffle('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, $len);
     }
+    public function getPFP($email, $size = 80, $default = 'mp', $rating = 'g') {
+        // Normalize the email address
+        $normalizedEmail = trim(strtolower($email));
+        
+        // Calculate the MD5 hash of the normalized email
+        $emailHash = md5($normalizedEmail);
+        
+        // Construct the Gravatar URL
+        $gravatarUrl = "https://www.gravatar.com/avatar/$emailHash?s=$size&d=$default&r=$rating";
+        
+        return $gravatarUrl;
+    }
 }
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 class Mail{
-
-    public function sendMail() {
-        require dirname(__FILE__).'/../../vendor/autoload.php';
+    public function sendMail($to, $subject, $body) {
+        require dirname(__FILE__).'/../vendor/autoload.php';
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $mail = new PHPMailer(true);
             try {
@@ -183,15 +197,14 @@ class Mail{
                 $mail->SMTPSecure = "tls";
 
                 // Recipients
-                $mail->setFrom('thecurve@odysseynetw.co.uk', 'Mailer');
-                $mail->addAddress('d4ws70@gmail.com', 'Recipient Name');
+                $mail->setFrom('thecurve@odysseynetw.co.uk', 'The Curve');
+                $mail->addAddress($to, 'Recipient Name');
 
                 // Content
                 $mail->isHTML(true);
-                $mail->Subject = 'THE CURVE : NOTIFICATION SYSTEM';
-                $mail->Body    = file_get_contents("./email.html");
+                $mail->Subject = $subject;
+                $mail->Body    = $body;
                 $mail->send();
-                echo 'EMAIL SENT.';
             } catch (Exception $e) {
                 echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
             }
