@@ -71,9 +71,21 @@ button:hover {
   margin-top: 1em;
   text-decoration: none;
   color: #007bff; /* Blue color for links */
-  font-size: 0.9em;
+  font-size: 1.1em;
 }
 
 .change-password-link:hover {
+  text-decoration: underline;
+}
+
+.logout {
+  display: block;
+  margin-top: 1em;
+  text-decoration: none;
+  color: #ff0000; /* Blue color for links */
+  font-size: 1em;
+}
+
+.logout:hover {
   text-decoration: underline;
 }
