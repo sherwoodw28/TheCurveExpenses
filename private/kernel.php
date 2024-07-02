@@ -122,7 +122,6 @@ class Database {
             return false;
         }
     }
-
     private function loadEnv($path) {
         if (!file_exists($path)) {
             throw new Exception("The .env file does not exist.");
@@ -188,21 +187,22 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 class Mail{
     public function sendMail($to, $subject, $body) {
+        $env = $this->loadEnv(__DIR__ . '/.env');
         require dirname(__FILE__).'/../vendor/autoload.php';
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $mail = new PHPMailer(true);
             try {
                 // Server settings
                 $mail->isSMTP();
-                $mail->Host = 'smtp-relay.brevo.com';
+                $mail->Host = $env->MAIL_HOST;
                 $mail->SMTPAuth = true;
-                $mail->Username = 'ericrosa914@gmail.com';
-                $mail->Password = '';
-                $mail->Port = 587;
+                $mail->Username = $env->MAIL_USERNAME;
+                $mail->Password = $env->MAIL_PASSWORD;
+                $mail->Port = $env->MAIL_PORT;
                 $mail->SMTPSecure = "tls";
 
                 // Recipients
-                $mail->setFrom('thecurve@odysseynetw.co.uk', 'The Curve');
+                $mail->setFrom($env->MAIL_FROM, $env->MAIL_FROM_NAME);
                 $mail->addAddress($to, 'Recipient Name');
 
                 // Content
@@ -214,5 +214,33 @@ class Mail{
                 echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
             }
         }
+    }
+    private function loadEnv($path) {
+        if (!file_exists($path)) {
+            throw new Exception("The .env file does not exist.");
+        }
+
+        $env = [];
+        $lines = file($path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+        foreach ($lines as $line) {
+            // Skip comments
+            if (strpos(trim($line), '#') === 0) {
+                continue;
+            }
+
+            // Parse key=value pairs
+            list($key, $value) = explode('=', $line, 2);
+            $key = trim($key);
+            $value = trim($value);
+
+            // Remove quotes from value if present
+            $value = trim($value, "'\"");
+
+            // Store the key-value pair in the array
+            $env[$key] = $value;
+        }
+
+        // Convert the array to an object
+        return (object) $env;
     }
 }
