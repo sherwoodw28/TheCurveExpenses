@@ -33,7 +33,7 @@
             </select>
             
             <a href="resetpass.html" class="change-password-link">Change Password</a>
-            <a href="logout.php" class="logout">Logout of Account</a>
+            <a href="/api/account/logout/" class="logout">Logout of Account</a>
         </div>
     </div>
 

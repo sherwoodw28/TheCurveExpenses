@@ -26,7 +26,7 @@
             </div>
             <button class="form__button" type="submit">Continue</button>
             <p class="form__text">
-                <a href="#" class="form__link">Forgot your password?</a>
+                <a href="/reset-password" class="form__link">Forgot your password?</a>
             </p>
             <p class="form__text">
                 <a class="form__link" href="./" id="linkCreateAccount">Don't have an account? Create account</a>

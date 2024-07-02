@@ -2,4 +2,4 @@
 global $website;
 $website->logout();
 
-$website->loginRedirect(1);
+header('location: /login');

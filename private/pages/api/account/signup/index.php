@@ -44,6 +44,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Split the name into 2
     list($first_name, $last_name) = explode(" ", $full_name);
 
+    // Ensure there is a last name
+    if(!$last_name){
+        $last_name = $first_name;
+    }
+
     // Generate some infomation
     $hash = $accountTools->generateRandom(20).'__RESET__TOKEN';
     $session = $accountTools->generateRandom(21).'__DO__NOT__SHAIR__YOUR__SESSION';
