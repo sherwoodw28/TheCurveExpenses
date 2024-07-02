@@ -72,8 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
     createAccountForm.addEventListener("submit", async (e) => {
         e.preventDefault();
-        console.log('Test');
-    
+
         try {
             // Get the values from the form inputs
             const email = createAccountForm.querySelector('[placeholder="Email"]').value;

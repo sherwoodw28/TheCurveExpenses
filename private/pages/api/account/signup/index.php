@@ -1,6 +1,10 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    header("Content-Type: application/json; charset=UTF-8");
+    // Get the website instance
+    global $website;
+    $database = new Database;
+    $accountTools = new AccountTools;
+    $mail = new Mail;
 
     // Get the raw POST data
     $rawData = file_get_contents('php://input');
@@ -10,55 +14,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Get the email
     $email = $data['email']; 
-
-    // Check that it is a valid email
-    function validateEmail($email) {
-        $pattern = '/^[\w\.-]+@[\w\.-]+\.[a-zA-Z]{2,4}$/';
-        return preg_match($pattern, $email) === 1;
-    }
     
-    if (!validateEmail($email)) {
-        echo json_encode([
-            'status' => 'error',
-            'error' => 'Please enter a valid email'
-        ]);
-        exit();
+    // Check that it is a valid email
+    if (!$accountTools->validateEmail($email)){
+        $website->giveApiError('Please enter a valid email');
     }
 
     // Check that the password meets the standards
-    function validatePassword($password) {
-        $pattern = '/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/';
-        return preg_match($pattern, $password) === 1;
-    }
-
     $password = $data['password'];
 
-    if (!validatePassword($password)) {
-        echo json_encode([
-            'status' => 'error',
-            'error' => 'The password must contain: 1 (a-z), 1 (A-Z), and be atleast 8 characters long'
-        ]);
-        exit();
+    if (!$accountTools->validatePassword($password)) {
+        $website->giveApiError('The password must contain 8 characters, 1 capital, 1 lowercase, and 1 number');
     }
 
     // Get the full name
     $full_name = $data['name'];
 
-    // Pull the data from the database
-    require(dirname(__FILE__).'/../../../../private/database.php');
-
     // Check the email is not in use
-    $stmt = executePreparedStatement("SELECT * FROM `users` WHERE email = ?", [$email]);
+    $stmt = $database->exe("SELECT * FROM `users` WHERE email = ?", [$email]);
 
     if ($stmt) {
         $result = $stmt->get_result();
         $row = $result->fetch_assoc();
         if($row){
-            echo json_encode([
-                'status' => 'error',
-                'error' => 'Email is already in use'
-            ]);
-            exit();
+            $website->giveApiError('Email already in use');
         }
     }
 
@@ -66,26 +45,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     list($first_name, $last_name) = explode(" ", $full_name);
 
     // Generate some infomation
-    $hash = substr(str_shuffle('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, 20);
-    $session = substr(str_shuffle('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, 21);
-    $resetToken = substr(str_shuffle('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, 22);
+    $hash = $accountTools->generateRandom(20).'__RESET__TOKEN';
+    $session = $accountTools->generateRandom(21).'__DO__NOT__SHAIR__YOUR__SESSION';
+    $resetToken = $accountTools->generateRandom(22).'__RESET__TOKEN';
 
     // Upload the data to the database
     $password = $data['password'];
 
-    $stmt = executePreparedStatement("INSERT INTO `users`(`first_name`, `last_name`, `email`, `manager`, `notification`, `password`, `session`, `password_token`, `hash`) VALUES (?,?,?,?,?,?,?,?,?)", [ $first_name, $last_name, $email, 0, 0, encryptPassword($password, $hash), $session, $resetToken, $hash ]);
-    echo json_encode([
+    $stmt = $database->exe("INSERT INTO `users`(`first_name`, `last_name`, `email`, `manager`, `notification`, `password`, `session`, `password_token`, `hash`) VALUES (?,?,?,?,?,?,?,?,?)", [ $first_name, $last_name, $email, 0, 0, $accountTools->encryptPassword($password, $hash), $session, $resetToken, $hash ]);
+    $email->sendMail();
+    $website->giveApiResponse([
         'status' => 'ok',
         'cookie' => $session
     ]);
-    exit();
-}
-
-
-function encryptPassword($password, $hash){
-    $secret_key = "ydygfuireytdfviute65yf5et".$hash;
-    $cipher = "aes-256-cbc";
-    $options = 0;
-    $iv = "74hf8rh3ng06hdgr";
-    return (openssl_encrypt($password, $cipher, $secret_key, $options, $iv));
 }

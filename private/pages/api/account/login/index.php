@@ -17,7 +17,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Check that it is a valid email
     if (!$accountTools->validateEmail($email)){
         $website->giveApiError('Please enter a valid email');
-        exit();
     }
 
     // Get the hash
@@ -29,7 +28,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $row = $result->fetch_assoc();
         if(!$row){
             $website->giveApiError('Invalid username/password');
-            exit();
         }
     }
 
@@ -50,14 +48,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $result = $stmt->get_result();
         $row = $result->fetch_assoc();
         if($row){
-            echo json_encode([
+            $website->giveApiResponse([
                 'status' => 'ok',
                 'cookie' => $row['session']
             ]);
-            exit();
         } else{
             $website->giveApiError('Invalid username/password');
-            exit();
         }
     }
 }
