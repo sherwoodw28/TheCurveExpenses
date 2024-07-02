@@ -1,0 +1,54 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+   
+  /* Assigning all the same properties to the body */
+  body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    background-color: rgb(51, 51, 51);
+    align-items: center;
+  }
+   
+  .container {
+    width: 20em;
+    background-color: rgb(255, 255, 255);
+    overflow: hidden;
+    border-radius: 1em;
+    text-align: center;
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-size: 1em;
+  }
+   
+  .user-image {
+    padding: 3em 0;
+    background-image: linear-gradient(70deg, #661e1e, #8e2020);
+  }
+   
+  .user-image img {
+    width: 7em;
+    height: 7em;
+    border-radius: 50%;
+    box-shadow: 0 0.6em 1.8em;
+    object-fit: cover;
+    color: black;
+  }
+   
+  .content {
+    color: rgb(51, 51, 51);
+    padding: 2.2em;
+  }
+
+   
+  .details {
+    margin-bottom: 1.8em;
+  }
+   
+   
+  /* CSS for manager dropdown */
+
+  
+   
