@@ -49,6 +49,13 @@ class Website {
             'status' => 'error',
             'error' => $error
         ]);
+        exit();
+    }
+    public function giveApiResponse($reponse){
+        header("Content-Type: application/json; charset=UTF-8");
+
+        echo json_encode($reponse);
+        exit();
     }
     public function loginRedirect($type){
         if(!$this->getUser() && $type == 1){
@@ -148,5 +155,46 @@ class AccountTools{
     public function validateEmail($email) {
         $pattern = '/^[\w\.-]+@[\w\.-]+\.[a-zA-Z]{2,4}$/';
         return preg_match($pattern, $email) === 1;
+    }
+    public function validatePassword($password) {
+        $pattern = '/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/';
+        return preg_match($pattern, $password) === 1;
+    }
+    public function generateRandom($len){
+        return substr(str_shuffle('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, $len);
+    }
+}
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+class Mail{
+
+    public function sendMail() {
+        require dirname(__FILE__).'/../../vendor/autoload.php';
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $mail = new PHPMailer(true);
+            try {
+                // Server settings
+                $mail->isSMTP();
+                $mail->Host = 'smtp-relay.brevo.com';
+                $mail->SMTPAuth = true;
+                $mail->Username = 'ericrosa914@gmail.com';
+                $mail->Password = '';
+                $mail->Port = 587;
+                $mail->SMTPSecure = "tls";
+
+                // Recipients
+                $mail->setFrom('thecurve@odysseynetw.co.uk', 'Mailer');
+                $mail->addAddress('d4ws70@gmail.com', 'Recipient Name');
+
+                // Content
+                $mail->isHTML(true);
+                $mail->Subject = 'THE CURVE : NOTIFICATION SYSTEM';
+                $mail->Body    = file_get_contents("./email.html");
+                $mail->send();
+                echo 'EMAIL SENT.';
+            } catch (Exception $e) {
+                echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+            }
+        }
     }
 }
