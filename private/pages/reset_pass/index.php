@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reset Password - The Curve</title>
-    <link rel="stylesheet" href="resetpasscss.css">
+    <link rel="stylesheet" href="/assets/reset_pass/style.css">
 </head>
 <body>
     <div class="reset-password-container">

@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Form - The Curve</title>
-    <link rel="shortcut icon" href="../../../assets/favicon.ico">
-    <link rel="stylesheet" href="../../../public/assets/approval/style.css">
+    <link rel="shortcut icon" href="/assets/favicon.ico">
+    <link rel="stylesheet" href="/assets/expense_form/style.css">
 </head>
 <body>
     <div class="container">
@@ -49,6 +49,6 @@
             <button type="submit">Submit</button>
         </form>
     </div>
-    <script src="../assets/approval/script.js"></script>
+    <script src="/assets/expense_form/script.js"></script>
 </body>
 </html>
