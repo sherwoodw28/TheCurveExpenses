@@ -39,6 +39,7 @@
             }
             ?>
             </select>
+            <script> document.querySelector('#manager').value = '<?php echo $user['manager'];?>'; </script>
             
             <a href="/reset-password" class="change-password-link">Change Password</a>
             <a href="/api/account/logout/" class="logout">Logout of Account</a>
