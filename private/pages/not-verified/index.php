@@ -24,3 +24,34 @@
     </div>
 </body>
 </html>
+<script>
+    document.querySelector('#resend-button').addEventListener('click', async()=>{
+        try {
+            // Perform your AJAX/Fetch logic
+            const request = await fetch("/api/account/resend-verification", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+        
+            // Check if the request was successful
+            if (!request.ok) {
+                throw new Error('Network response was not ok');
+            }
+        
+            // Parse the response as JSON
+            const response = await request.json();
+        
+            // Check for errors in the response and set the form message accordingly
+            if (response.error) {
+                alert(response.error);
+            } else{
+                alert('Verification email re-sent');
+            }
+        } catch (error) {
+            console.error('There was a problem with the fetch operation:', error);
+            alert("An error occurred re-sending the verification email");
+        }
+    });
+</script>

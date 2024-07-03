@@ -18,7 +18,7 @@
     <div class="container">
         <header>
             <img onclick="window.location.href = '/profile'" style="cursor: pointer;" src="<?php echo $accountTools->getPFP($website->getUser()['email']);?>" alt="Profile Picture" class="profile-picture">
-            <h1>Welcome, <?php echo $website->getUser()['first_name'];?></h1>
+            <h1 onclick="window.location.href = '/profile'" style="cursor: pointer;">Welcome, <?php echo $website->getUser()['first_name'];?></h1>
             <div class="header-buttons">
                 <button onclick="window.location.href = '/expense_form';" class="header-btn">New Form</button>
             </div>

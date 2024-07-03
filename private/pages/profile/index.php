@@ -21,7 +21,7 @@
 <body>
     <div class="container">
         <div class="user-image">
-            <img src="<?php echo $accountTools->getPFP($website->getUser()['email']);?>" alt="User Image">
+            <img onclick="window.location.href = 'https://wordpress.com/log-in/link?client_id=1854&redirect_to=https%3A%2F%2Fpublic-api.wordpress.com%2Foauth2%2Fauthorize%3Fclient_id%3D1854%26response_type%3Dcode%26blog_id%3D0%26state%3D28b1ab4b99d70f4587971b4ee8635d24f473e249e42b6645420088011e792ed4%26redirect_uri%3Dhttps%253A%252F%252Fgravatar.com%252Fconnect%252F%253Faction%253Drequest_access_token%26from-calypso%3D1'" style="cursor: pointer;" src="<?php echo $accountTools->getPFP($website->getUser()['email']);?>" alt="User Image">
         </div>
         <div class="content">
             <input type="text" id="Name" name="Name" placeholder="<?php echo $website->getUser()['first_name'];?> <?php echo $website->getUser()['last_name'];?>" value="<?php echo $website->getUser()['first_name'];?> <?php echo $website->getUser()['last_name'];?>" value="<?php echo $website->getUser()['first_name'];?>">
