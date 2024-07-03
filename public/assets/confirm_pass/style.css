@@ -8,11 +8,7 @@
 }
 body{
     height: 100vh;
-    background: linear-gradient(
-        45deg,
-        #3e0c0c,
-        #5e1313
-    );
+    background-color: rgb(169, 67, 67);
 }
 form{
     background-color: #ffffff;
