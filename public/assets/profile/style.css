@@ -53,7 +53,7 @@ select {
 }
 
 button {
-  background-color: #4CAF50;
+  background-color: #c91a1a;
   color: white;
   padding: 0.8em 1.2em;
   border: none;
@@ -63,7 +63,7 @@ button {
 }
 
 button:hover {
-  background-color: #45a049;
+  background-color: #932222;
 }
 
 .change-password-link {

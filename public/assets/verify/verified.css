@@ -35,7 +35,7 @@ select {
     margin-top: 20px;
     padding: 10px 20px; 
     font-size: medium;
-    background-color: rgb(247, 7, 7);
+    background-color: #c91a1a;
     color: white; 
     border: none; 
     border-radius: 5px; 
@@ -43,7 +43,7 @@ select {
 }
 
 .confirm-button:hover {
-    background-color: rgb(194, 10, 10); 
+    background-color:#932222; 
 }
 
 .footer {
