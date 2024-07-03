@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    #Get information of the user
+    // Get information of the user
     $user = $website->getUser();
 
     // Set manager based on the dropdown menu input
