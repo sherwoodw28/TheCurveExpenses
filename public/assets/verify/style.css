@@ -16,12 +16,25 @@ body {
 h1 {
     color: rgb(242, 242, 242);
     text-align: center;
-
 }
 
 h2 {
     color: rgb(242, 242, 242);
     text-align: center;
     margin-top: 70px;
+}
 
+button {
+    margin-top: 30px;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: rgb(247, 7, 7);;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: rgb(194, 10, 10);
 }

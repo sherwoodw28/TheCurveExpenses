@@ -20,6 +20,7 @@
     <div class="content">
         <h1>Email verification has been sent</h1>
         <h2>Please check your inbox</h2>
+        <button id="resend-button">Resend Email</button>
     </div>
 </body>
 </html>
