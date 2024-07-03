@@ -29,11 +29,11 @@
 
         <select name="manager" id="manager">
         <?php
+            //Gets all users from the database.
             $managers = $website->getAllUsers();
-
-            print_r($managers);
-
+            //Iterates through users that exist, takes the ID, First and Last Name
             foreach($managers as $manager){
+                //Makes sure self is not in list.
                 if($manager['id'] != $user['id']){
                     echo '<option value="'.$manager['id'].'">'.$manager['first_name'].' '.$manager['last_name'].'</option>';
                 }

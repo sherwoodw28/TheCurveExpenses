@@ -2,6 +2,8 @@
     global $website;
     $website->loginRedirect(1);
 
+    $user = $website->getUser();
+
     $accountTools = new AccountTools;
 ?>
 
@@ -26,11 +28,16 @@
             
             <label for="manager">Choose a manager:</label>
             <select name="manager" id="manager">
-                <option value="1">Manager 1</option>
-                <option value="2">Manager 2</option>
-                <option value="3">Manager 3</option>
-                <option value="4">Manager 4</option>
-                <option value="5">Manager 5</option>
+            <?php
+            $managers = $website->getAllUsers();
+
+
+            foreach($managers as $manager){
+                if($manager['id'] != $user['id']){
+                    echo '<option value="'.$manager['id'].'">'.$manager['first_name'].' '.$manager['last_name'].'</option>';
+                }
+            }
+            ?>
             </select>
             
             <a href="resetpass.html" class="change-password-link">Change Password</a>
