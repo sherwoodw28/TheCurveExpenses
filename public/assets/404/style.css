@@ -1,0 +1,32 @@
+body {
+    background-color: rgb(91, 15, 15);
+    margin: 0; /* Ensure there is no margin around the body */
+    height: 100vh; /* Make the body take up the full height of the viewport */
+    display: flex; /* Enable flexbox on the body */
+    flex-direction: column; /* Align items in a column */
+    justify-content: center; /* Center the content vertically */
+    align-items: center; /* Center the content horizontally */
+    text-align: center; /* Center text */
+}
+
+.content {
+    text-align: center; /* Center the text inside the content box */
+}
+
+h1 {
+    color: rgb(248, 248, 248);
+    margin-bottom: 20px; /* Add some space below the heading */
+}
+
+p {
+    color: white;
+    font-size: larger;
+    margin-bottom: 20px; /* Add some space below the paragraph */
+}
+
+.error-image {
+    max-width: 80%; /* Make sure the image is responsive */
+    height: auto;
+    border: 2px solid white; /* Optional: add a white border around the image */
+    border-radius: 10px; /* Optional: add rounded corners to the image */
+}
