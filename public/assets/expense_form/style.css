@@ -54,3 +54,6 @@ button:hover {
 input[type="file"] {
     padding: 3px;
 }
+#message{
+    color: rgb(169, 67, 67);
+}

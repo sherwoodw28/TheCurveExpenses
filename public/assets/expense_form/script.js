@@ -1,58 +1,57 @@
-// script.js
 document.addEventListener("DOMContentLoaded", function() {
-    const form = document.getElementById('sampleForm');
+    const form = document.getElementById('form');
 
-    form.addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevent form from submitting normally
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
 
-        const email = document.getElementById('email').value;
-        const reason = document.getElementById('reason').value;
-        const details = document.getElementById('details').value;
-        const dateNeededFrom = document.getElementById('dateNeededFrom').files[0];
-        const dateNeededTo = document.getElementById('dateNeededTo').files[0];
-        const totalCost = document.getElementById('totalCost').files[0];
-        const assistance = document.getElementById('assistance').files[0];
-        const comments = document.getElementById('comments').files[0];
-
-        // Basic validation (more sophisticated validation can be added)
-        if (!email || !reason || !details || !dateNeededFrom || !dateNeededTo || totalCost || !assistance || !comments) {
-            alert('Please fill out all fields');
-            return;
-        }
-
-        if (!validateEmail(email)) {
-            alert('Please enter a valid email address');
-            return;
-        }
-
-        // Handle file upload
+        // Create a FormData object
         const formData = new FormData();
-        formData.append('email', email);
-        formData.append('reason', reason);
-        formData.append('details', details);
-        formData.append('dateNeededFrom', dateNeededFrom);
-        formData.append('dateNeededTo', dateNeededTo);
-        formData.append('totalCost', totalCost);
-        formData.append('assistance', assistance);
-        formData.append('comments', comments);
+        
+        // Append text values
+        formData.append('reason', document.getElementById('reason').value);
+        formData.append('details', document.getElementById('details').value);
+        formData.append('dateNeededFrom', document.getElementById('dateNeededFrom').value);
+        formData.append('dateNeededTo', document.getElementById('dateNeededTo').value);
+        formData.append('totalCost', document.getElementById('totalCost').value);
+        formData.append('assistance', document.getElementById('assistance').value);
+        formData.append('comments', document.getElementById('comments').value);
 
-        fetch('your-server-endpoint', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            alert('Form submitted successfully!');
-            console.log(data);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Form submission failed!');
-        });
+        // Append files
+        formData.append('file1', document.querySelector('#fileUpload').files[0]);
+        formData.append('file2', document.querySelector('#fileUpload1').files[0]);
+        formData.append('file3', document.querySelector('#fileUpload2').files[0]);
+
+        try {
+            // Perform the request
+            const request = await fetch("/api/form/submit", {
+                method: "POST",
+                body: formData
+            });
+    
+            // Check if the request was successful
+            if (!request.ok) {
+                throw new Error('Network response was not ok');
+            }
+    
+            // Parse the response as JSON
+            const response = await request.json();
+    
+            // Check for errors in the response and set the form message accordingly
+            if (response.error) {
+                setFormMessage(false, "error", response.error);
+            } else {
+                alert('Form submitted successfully');
+                window.location.href = '/dashboard';
+            }
+        } catch (error) {
+            console.error('There was a problem with the fetch operation:', error);
+            setFormMessage(false, "error", "An error occurred during form submission.");
+        }
     });
-
-    function validateEmail(email) {
-        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return re.test(String(email).toLowerCase());
-    }
 });
+
+function setFormMessage(success, type, message) {
+    const messageElement = document.querySelector('#message');
+    messageElement.textContent = message;
+    messageElement.className = type;
+}
