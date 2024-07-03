@@ -28,13 +28,13 @@
 <body>
     <form id="change_pass">
         <h1 class="form__title">The Curve</h1>
+        <p id="message"></p>
         <label for="password">Enter new password</label>
         <input type="password" id="password" placeholder="Enter new password here">
         <label for="cnfrm-password">Confirm password</label>
         <input type="password" id="cnfrm-password" placeholder="Confirm password here">
-        <p id="message"></p>
-        <input type="button" value="SUBMIT"/>
+        <input type="submit" value="SUBMIT"/>
     </form>
-    <script src="/assets/confirm_pass"></script>
+    <script src="/assets/confirm_pass/script.js"></script>
 </body>
 </html>

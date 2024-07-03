@@ -24,7 +24,7 @@
             <img src="<?php echo $accountTools->getPFP($website->getUser()['email']);?>" alt="User Image">
         </div>
         <div class="content">
-            <input type="text" id="Name" name="Name" placeholder="<?php echo $website->getUser()['first_name'];?>" value="<?php echo $website->getUser()['first_name'];?>">
+            <input type="text" id="Name" name="Name" placeholder="<?php echo $website->getUser()['first_name'];?> <?php echo $website->getUser()['last_name'];?>" value="<?php echo $website->getUser()['first_name'];?> <?php echo $website->getUser()['last_name'];?>" value="<?php echo $website->getUser()['first_name'];?>">
             
             <label for="manager">Choose a manager:</label>
             <select name="manager" id="manager">

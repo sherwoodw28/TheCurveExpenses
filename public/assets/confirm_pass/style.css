@@ -40,7 +40,7 @@ input{
 input[type="password"]{
     border: 2px solid #c2c2c2;
 }
-input[type="button"]{
+input[type="submit"]{
     background-color: #c91a1a;
     border: none;
     color: #ffffff;
@@ -59,5 +59,9 @@ p{
 
 .form__title {
     margin-bottom: 2rem;
+    text-align: center;
+}
+#message{
+    color: #cc3333;
     text-align: center;
 }
