@@ -28,7 +28,10 @@ class Website {
         return '/'.trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
     }
     public function loadPage($page){
-        if(file_exists(dirname(__FILE__)."/pages$page/index.php")){
+        if($page == '/' || $page == ''){
+            $page = '/home';
+        }
+        if(file_exists(dirname(__FILE__)."/pages/$page/index.php")){
             include(dirname(__FILE__)."/pages/$page/index.php");
         } else{
             $this->give_404();
