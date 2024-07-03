@@ -20,6 +20,7 @@
 <html>
 <head>
     <link rel="stylesheet" href="/assets/verify/verified.css">
+    <link rel="shortcut icon" href="/assets/favicon.ico">
 </head>    
 <body>
     <div class="content">

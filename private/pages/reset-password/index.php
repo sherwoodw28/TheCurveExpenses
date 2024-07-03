@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reset Password - The Curve</title>
     <link rel="stylesheet" href="/assets/reset_pass/style.css">
+    <link rel="shortcut icon" href="/assets/favicon.ico">
 </head>
 <body>
     <div class="reset-password-container">

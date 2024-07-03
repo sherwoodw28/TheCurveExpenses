@@ -12,6 +12,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/assets/profile/style.css">
+    <link rel="shortcut icon" href="/assets/favicon.ico">
     <title>Profile - The Curve</title>
 </head>
 
