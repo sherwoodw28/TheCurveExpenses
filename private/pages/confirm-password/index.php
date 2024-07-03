@@ -16,6 +16,6 @@
         <p id="message"></p>
         <input type="button" onclick="checkPassword()" value="SUBMIT"/>
     </form>
-    <script src="/assets/confirm-password"></script>
+    <script src="/assets/confirm_pass"></script>
 </body>
 </html>
