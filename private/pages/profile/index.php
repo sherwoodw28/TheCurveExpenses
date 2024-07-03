@@ -42,6 +42,7 @@
             
             <a href="/reset-password" class="change-password-link">Change Password</a>
             <a href="/api/account/logout/" class="logout">Logout of Account</a>
+            <script src="/assets/profile/script.js"></script>
         </div>
     </div>
 
