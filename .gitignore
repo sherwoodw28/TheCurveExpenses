@@ -1,1 +1,11 @@
 *.env
+private/pages/api/form/submit/images/*.png
+private/pages/api/form/submit/images/*.jpg
+private/pages/api/form/submit/images/*.webp
+private/pages/api/form/submit/images/*.pdf
+private/pages/api/form/submit/images/*.jpeg
+private/pages/api/form/submit/images/*.bmp
+private/pages/api/form/submit/images/*.tiff
+private/pages/api/form/submit/images/*.raw
+private/pages/api/form/submit/images/*.hief
+private/pages/api/form/submit/images/*.ico
