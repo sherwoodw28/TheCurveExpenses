@@ -27,6 +27,4 @@ p {
 .error-image {
     max-width: 80%; /* Make sure the image is responsive */
     height: auto;
-    border: 2px solid white; /* Optional: add a white border around the image */
-    border-radius: 10px; /* Optional: add rounded corners to the image */
 }
