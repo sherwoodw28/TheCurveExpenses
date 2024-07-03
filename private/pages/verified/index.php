@@ -1,3 +1,21 @@
+<?php
+    global $website;
+    $website->loginRedirect(3);
+    
+    if(!$token = $_GET['token'] ?: null){
+        $website->give_404();
+        exit();
+    }
+
+    $database = new Database;
+    $user = $website->getUser();
+
+    if($user['verify_token'] != $token){
+        $website->give_404();
+        exit();
+    }
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,11 +27,17 @@
         <label for="manager">Choose a manager:</label> <br>
 
         <select name="manager" id="manager">
-        <option value="1">Manager 1</option>
-        <option value="2">Manager 2</option>
-        <option value="3">Manager 3</option>
-        <option value="4">Manager 4</option>
-        <option value="5">Manager 5</option>
+        <?php
+            $managers = $website->getAllUsers();
+
+            print_r($managers);
+
+            foreach($managers as $manager){
+                if($manager['id'] != $user['id']){
+                    echo '<option value="'.$manager['id'].'">'.$manager['first_name'].' '.$manager['last_name'].'</option>';
+                }
+            }
+        ?>
         </select>
         
         <button class="confirm-button">Confirm</button>

@@ -78,6 +78,24 @@ class Website {
     public function logout(){
         setcookie("session", "", time() - 3600, "/");
     }
+    public function getAllUsers(){
+        if(!$this->database){
+            $this->database = new Database;
+        }
+
+        // Check the session is valid
+        $stmt = $this->database->exe("SELECT * FROM `users`", []);
+
+        if ($stmt) {
+            $result = $stmt->get_result();
+            $row = $result->fetch_all(MYSQLI_ASSOC);
+            if($row){
+                return $row;
+            } else{
+                return false;
+            }
+        }
+    }
 }
 class Database {
     private $env;
