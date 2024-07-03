@@ -10,5 +10,15 @@
     }
 ?>
 
-
-<p>Please verify your email!</p>
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="/assets/verify/style.css">
+</head>
+<body>
+    <div class="content">
+        <h1>Email verification has been sent</h1>
+        <h2>Please check your inbox</h2>
+    </div>
+</body>
+</html>

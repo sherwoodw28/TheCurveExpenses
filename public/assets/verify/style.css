@@ -1,0 +1,26 @@
+body {
+    background-color: rgb(91, 15, 15);
+    margin: 0; 
+    height: 100vh; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+}
+
+.content {
+    text-align: center; 
+}
+
+h1 {
+    color: rgb(242, 242, 242);
+    text-align: center;
+
+}
+
+h2 {
+    color: rgb(242, 242, 242);
+    text-align: center;
+    margin-top: 70px;
+
+}
