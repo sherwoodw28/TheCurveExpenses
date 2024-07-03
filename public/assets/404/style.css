@@ -1,4 +1,5 @@
 body {
+    font-family: Arial, sans-serif;
     background-color: rgb(91, 15, 15);
     margin: 0; /* Ensure there is no margin around the body */
     height: 100vh; /* Make the body take up the full height of the viewport */
