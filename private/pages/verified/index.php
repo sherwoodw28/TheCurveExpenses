@@ -3,7 +3,7 @@
     $website->loginRedirect(3);
     
     if(!$token = $_GET['token'] ?: null){
-        $website->give_404();
+        header('location: /dashboard');
         exit();
     }
 
@@ -11,7 +11,7 @@
     $user = $website->getUser();
 
     if($user['verify_token'] != $token){
-        $website->give_404();
+        header('location: /dashboard');
         exit();
     }
 ?>
