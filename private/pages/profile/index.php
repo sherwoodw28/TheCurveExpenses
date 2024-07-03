@@ -33,7 +33,7 @@
                 <option value="5">Manager 5</option>
             </select>
             
-            <a href="resetpass.html" class="change-password-link">Change Password</a>
+            <a href="/reset-password" class="change-password-link">Change Password</a>
             <a href="/api/account/logout/" class="logout">Logout of Account</a>
         </div>
     </div>

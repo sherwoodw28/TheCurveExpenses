@@ -26,13 +26,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($stmt) {
         $result = $stmt->get_result();
-        $row = $result->fetch_assoc();
-        if(!$row){
+        $user = $result->fetch_assoc();
+        if(!$user){
             $website->giveApiError('Email not currently registered');
         }
     }
 
-    $url = '';
+    $url = 'https://thecurve.odysseynetw.co.uk/confirm-password?token='.$user;
 
     $mail->sendMail($email, 'Password Reset', str_replace('{{url}}', $url, file_get_contents(dirname(__FILE__)."/../../../../../email-htmls/forgotPassword.html")));
     $website->giveApiResponse([

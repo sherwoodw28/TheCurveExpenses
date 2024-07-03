@@ -48,7 +48,7 @@
             if (response.error) {
                 setFormMessage(document.querySelector('#reset-password-form'), "error", response.error);
             } else {
-                setFormMessage(document.querySelector('#reset-password-form'), "reset", 'Password email reset');
+                setFormMessage(document.querySelector('#reset-password-form'), "reset", 'Password reset email sent');
             }
         } catch (error) {
             console.error('There was a problem with the fetch operation:', error);
