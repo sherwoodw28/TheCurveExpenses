@@ -12,39 +12,38 @@
         <h2>Approval Form</h2>
         <form id="sampleForm">
             
-            <label for="reason">Reason for Request:</label>
-            <input type="reason" id="reason" name="reason" required>
+            <label for="reason">Reason for Request: <span style="color: red;">*</span></label>
+            <input type="text" id="reason" name="reason" required>
             
-            <label for="details">Full Details of Request: <br>(starting location, destination time, transport required, etc)</label>
-            <input type="details" id="details" name="details" required>
+            <label for="details">Full Details of Request: <span style="color: red;">*</span><br>(starting location, destination time, transport required, etc)</label>
+            <input type="text" id="details" name="details" required>
 
-            <label for="dateNeededFrom">Date Required from: (dd/mm/yyyy)</label>
-            <input type="dateNeededFrom" id="dateNeededFrom" name="dateNeededFrom" required>
+            <label for="dateNeededFrom">Date Required from: <span style="color: red;">*</span> (dd/mm/yyyy)</label>
+            <input type="date" id="dateNeededFrom" name="dateNeededFrom" required>
 
-            <label for="dateNeededTo">End date: (dd/mm/yyyy)</label>
-            <input type="dateNeededTo" id="dateNeededTo" name="dateNeededTo" required>
+            <label for="dateNeededTo">End date: <span style="color: red;">*</span> (dd/mm/yyyy)</label>
+            <input type="date" id="dateNeededTo" name="dateNeededTo" required>
 
-            <label for="totalCost">Total Cost: (only applicable to Employees directly making the booking)</label>
-            <input type="totalCost" id="totalCost" name="totalCost" required>
+            <label for="totalCost">Total Cost: <span style="color: red;">*</span> (only applicable to Employees directly making the booking)</label>
+            <input type="number" id="totalCost" name="totalCost" required>
 
-            <label for="fileUpload">Please upload all receipts:</label>
+            <label for="fileUpload">Please upload all receipts: <span style="color: red;">*</span></label>
             <input type="file" id="fileUpload" name="fileUpload" required>
 
-            <label for="fileUpload">Please upload all receipts:</label>
-            <input type="file" id="fileUpload1" name="fileUpload1" required>
+            <label for="fileUpload1">Please upload all receipts:</label>
+            <input type="file" id="fileUpload1" name="fileUpload1">
 
-            <label for="fileUpload">Please upload all receipts:</label>
-            <input type="file" id="fileUpload2" name="fileUpload2" required>
+            <label for="fileUpload2">Please upload all receipts:</label>
+            <input type="file" id="fileUpload2" name="fileUpload2">
 
-            <label for="assistance">Do you require assistance with your booking? (including making the payment)</label>
+            <label for="assistance">Do you require assistance with your booking? <span style="color: red;">*</span> (including making the payment)</label>
             <select id="assistance" name="assistance" required>
-                <option value="">Select an option</option>
+                <option value="no" selected>No</option>
                 <option value="yes">Yes</option>
-                <option value="no">No</option>
             </select>
 
             <label for="comments">Any additional comments?</label>
-            <input type="comments" id="comments" name="comments" required>
+            <input type="text" id="comments" name="comments">
 
             <button type="submit">Submit</button>
         </form>

@@ -8,16 +8,12 @@
 }
 body{
     height: 100vh;
-    background: linear-gradient(
-        45deg,
-        #3e0c0c,
-        #5e1313
-    );
+    background-color: rgb(169, 67, 67);
 }
 form{
     background-color: #ffffff;
     width: 700px;
-    padding: 100px 30px;
+    padding: 30px 30px;
     position: absolute;
     transform: translate(-50%,-50%);
     top: 50%;
@@ -45,7 +41,7 @@ input[type="password"]{
     border: 2px solid #c2c2c2;
 }
 input[type="button"]{
-    background-color: #5a0d0d;
+    background-color: #c91a1a;
     border: none;
     color: #ffffff;
     font-weight: 500;
@@ -59,4 +55,9 @@ p{
     margin: 15px 0;
     display: inline-block;
     color: #ffffff;
+}
+
+.form__title {
+    margin-bottom: 2rem;
+    text-align: center;
 }

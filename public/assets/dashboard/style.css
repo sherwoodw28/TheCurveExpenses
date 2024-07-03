@@ -40,7 +40,7 @@ header .profile-picture {
 }
 
 .header-btn {
-    background-color: #c91a1a;
+    background-color: #c91a1a; 
     color: white;
     padding: 15px 25px; /* Increased padding for larger buttons */
     border: none;

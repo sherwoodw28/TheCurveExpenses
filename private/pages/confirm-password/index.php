@@ -9,6 +9,7 @@
 </head>
 <body>
     <form>
+        <h1 class="form__title">The Curve</h1>
         <label for="password">Enter new password</label>
         <input type="password" id="password" placeholder="Enter new password here">
         <label for="cnfrm-password">Confirm password</label>
@@ -16,5 +17,6 @@
         <p id="message"></p>
         <input type="button" onclick="checkPassword()" value="SUBMIT"/>
     </form>
+    <script src="/assets/confirm_pass"></script>
 </body>
 </html>

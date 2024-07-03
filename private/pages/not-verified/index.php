@@ -18,8 +18,9 @@
 </head>
 <body>
     <div class="content">
-        <h1>Email verification has been sent</h1>
-        <h2>Please check your inbox</h2>
+        <h1>Please verify your email.</h1>
+        <h2>A verification email has been sent to your inbox!</h2>
+        <button id="resend-button">Resend Email</button>
     </div>
 </body>
 </html>
