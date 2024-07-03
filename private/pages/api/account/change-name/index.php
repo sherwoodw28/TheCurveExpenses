@@ -16,11 +16,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user = $website->getUser();
 
     // Set name based on the input
-    $stmt = $database->exe("UPDATE `users` SET `name` = ? WHERE `id` = ?", [ $name, $user['id'] ]);
-    if (!$stmt) {
-        $website->giveApiError('An error has occurred. Unable to set name');
-    }
+    list($first_name, $last_name) = explode(" ", $name);
 
+    // Ensure there is a last name
+    if(!$last_name){
+        $last_name = $first_name;
+    }
+    
+    $stmt = $database->exe("UPDATE `users` SET `first_name` = ? WHERE `id` = ?", [ $first_name, $user['id'] ]);
+    if (!$stmt) {
+        $website->giveApiError('An error has occurred. Unable to set first name');
+    }
+    $stmt = $database->exe("UPDATE `users` SET `last_name` = ? WHERE `id` = ?", [ $last_name, $user['id'] ]);
+    if (!$stmt) {
+        $website->giveApiError('An error has occurred. Unable to set last name');
+    }
     //Give OK response
     $website->giveApiResponse([
         'status' => 'ok'
