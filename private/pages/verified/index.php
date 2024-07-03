@@ -48,3 +48,42 @@
     </div>
 </body>
 </html>
+<script>
+    const verifyButton = document.querySelector('.confirm-button');
+    verifyButton.addEventListener("click", async (e) => {
+        e.preventDefault();
+    
+        try {
+            // Get the values from the form inputs
+            const manager = document.querySelector('#manager').value;
+            const token = <?php echo json_encode($token); ?>;
+    
+            // Perform your AJAX/Fetch login
+            const request = await fetch("/api/account/verify", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ manager, token })
+            });
+    
+            // Check if the request was successful
+            if (!request.ok) {
+                throw new Error('Network response was not ok');
+            }
+    
+            // Parse the response as JSON
+            const response = await request.json();
+    
+            // Check for errors in the response and set the form message accordingly
+            if (response.error) {
+                alert(response.error);
+            } else {
+                window.location.href = "/dashboard";
+            }
+        } catch (error) {
+            console.error('There was a problem with the fetch operation:', error);
+            alert("An error occurred during verification.");
+        }
+    });
+</script>
