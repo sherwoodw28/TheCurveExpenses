@@ -66,11 +66,11 @@ class Website {
             header('location: /not-verified');
             exit();
         }
-        if(!$user && $type == 1){
+        if(!$user && $type == 1){ // Redirect you to login if not logged in
             header('location: /login');
             exit();
         }
-        if($user && $type == 2){
+        if($user && $type == 2){ // Redirect you to dashboard if logged in
             header('location: /dashboard');
             exit();
         }
