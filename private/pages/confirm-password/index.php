@@ -1,16 +1,6 @@
 <?php
-    global $website;
-    $website->loginRedirect(1);
-    
+    global $website;    
     if(!$token = $_GET['token'] ?: null){
-        header('location: /dashboard');
-        exit();
-    }
-
-    $database = new Database;
-    $user = $website->getUser();
-
-    if($user['password_token'] != $token){
         header('location: /dashboard');
         exit();
     }
@@ -28,7 +18,7 @@
 <body>
     <form id="change_pass">
         <h1 class="form__title">The Curve</h1>
-        <p id="message"></p>
+        <p id="message"></p><br>
         <label for="password">Enter new password</label>
         <input type="password" id="password" placeholder="Enter new password here">
         <label for="cnfrm-password">Confirm password</label>

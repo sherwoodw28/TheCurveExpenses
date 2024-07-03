@@ -50,10 +50,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Generate some infomation
-    $hash = $accountTools->generateRandom(20).'__RESET__TOKEN';
+    $hash = $accountTools->generateRandom(20);
     $session = $accountTools->generateRandom(21).'__DO__NOT__SHAIR__YOUR__SESSION';
     $resetToken = $accountTools->generateRandom(22).'__RESET__TOKEN';
-    $verifyToken = $accountTools->generateRandom(23);
+    $verifyToken = $accountTools->generateRandom(23).'__ACCOUNT__VERIFY';
 
     // Upload the data to the database
     $password = $data['password'];
