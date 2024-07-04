@@ -36,6 +36,23 @@ CREATE TABLE `records` (
   `comment` text NOT NULL
 )
 ```
+( If you get an issue, try this as it works on a newer version )
+```SQL
+CREATE TABLE `records` (
+  `id` bigint(20) NOT NULL,
+  `user` bigint(20) NOT NULL,
+  `reason` text NOT NULL,
+  `details` text NOT NULL,
+  `timestamp` datetime NOT NULL DEFAULT current_timestamp(),
+  `date` datetime NOT NULL,
+  `dateAfter` datetime NOT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 0,
+  `expenses` text NOT NULL,
+  `receipts` text NOT NULL,
+  `assistance` tinyint(4) NOT NULL,
+  `comment` text NOT NULL
+)
+```
 
 ```SQL
 CREATE TABLE `users` (
@@ -63,4 +80,14 @@ ALTER TABLE `records`
 ```SQL
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
+```
+```SQL
+ALTER TABLE `records`
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+COMMIT;
+```
+```SQL
+ALTER TABLE `users`
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+COMMIT;
 ```
