@@ -49,6 +49,7 @@
                                 '" data-id="'.$request['id'].
                                 '" data-endDate="'.htmlspecialchars($request['dateAfter']).
                                 '" data-timestamp="'.htmlspecialchars($request['timestamp']).
+                                '" data-comment="'.htmlspecialchars($request['comment']).
                                 '">'.htmlspecialchars($userRecordFor['first_name']).' '.
                                 htmlspecialchars($userRecordFor['last_name']).'</option>';
                             }

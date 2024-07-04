@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const cost = selectedOption.getAttribute('data-cost');
             const timeStamp = selectedOption.getAttribute('data-timestamp');
             const id = selectedOption.getAttribute('data-id');
-
+            const comment = selectedOption.getAttribute('data-comment');
             
             document.getElementById('payment-submitted-by').textContent = `${name} (${email})`;
             paymentDetails.querySelector('.view-rec').href = '/view-receipt?id='+id.toString();
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Clear and add items to the list
             const paymentRequestDetails = document.getElementById('payment-request-details');
             paymentRequestDetails.innerHTML = "";
-            const items = [`Reason: ${reason}`, `Details: ${details}`, `Date From: ${formatDate(date)}`, `Date To: ${formatDate(endDate)}`, `Total Cost: £${cost}`];
+            const items = [`Reason: ${reason}`, `Details: ${details}`, `Date From: ${formatDate(date)}`, `Date To: ${formatDate(endDate)}`, `Total Cost: £${cost}`, `Comment: ${comment}`];
             items.forEach(item => {
                 const li = document.createElement('li');
                 li.textContent = item;
