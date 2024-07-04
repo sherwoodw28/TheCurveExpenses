@@ -1,6 +1,6 @@
-# Expense Reinbursement Form
+# The Curve Expenses
 
-## "The Curve" - Work Experience
+## "The Curve" - Work Experience 2024
 
 ### Dates: 1st July - 5th July
 
