@@ -12,14 +12,14 @@ This is created using:
 
 
 ## Install Guide
-1) Clone the repo
-2) Re-name the .env_example file the .env and fill out hte infomation
+1) Clone the repo.
+2) Re-name the .env_example file the .env and fill out the infomation. It's located in the /private folder
 3) Run the following command inside the root directory
 ```bash
 chmod 777 ./private/pages/api/form/submit/images/
 ```
-4) Setup a WebServer in the `./public` folder
-5) To install the database, create a database and run the following SQL on it:
+4) Setup a WebServer in the `./public` folder.
+5) To install the database, create a database and run the following SQL on it
 ```SQL
 CREATE TABLE `records` (
   `id` bigint(20) NOT NULL,
