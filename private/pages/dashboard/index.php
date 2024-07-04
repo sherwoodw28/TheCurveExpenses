@@ -6,6 +6,7 @@
     $user = $website->getUser();
 
     $requests = $website->getRequests($user, '0');
+    $requests2 = $website->getRequests($user, '1');
 ?>
 
 <!DOCTYPE html>
@@ -31,7 +32,7 @@
                 <div class="card">
                     <h3>To Review</h3>
                     <select id="payment-options" name="payment-options">
-                        <option value="" disabled selected hidden>Select an option</option>
+                        <option value="" disabled selected hidden><?php echo $count.' new forms available';?></option>
                         <?php
                             foreach ($requests as $request) {
                                 $userRecordFor = $website->getUser($website->getUser($request['user'])['id']);
@@ -43,9 +44,10 @@
                                 '" data-date="'.htmlspecialchars($request['date']).
                                 '" data-endDate="'.htmlspecialchars($request['dateAfter']).
                                 '" data-cost="'.htmlspecialchars($request['expenses']).
+                                '" data-id="'.$request['id'].
                                 '" data-endDate="'.htmlspecialchars($request['dateAfter']).
                                 '" data-timestamp="'.htmlspecialchars($request['timestamp']).
-                                '" value="'.$request['id'].'">'.htmlspecialchars($userRecordFor['first_name']).' '.
+                                '">'.htmlspecialchars($userRecordFor['first_name']).' '.
                                 htmlspecialchars($userRecordFor['last_name']).'</option>';
                             }
                         ?>
@@ -57,18 +59,34 @@
                             <li>Lorem ipsum dolor sit amet.</li>
                         </ul>
                         <p><strong>Submission Date:</strong> <span id="payment-submission-date">2023-07-01 12:00 PM</span></p>
+                        <a href="/view-receipt?id=" target="_blank" class="view-rec">View Receipts</a><br><br>
                         <button id="payment-approve-btn" class="approve-btn">Confirm Approval</button>
                     </div>
                 </div>
                 <div class="card">
                     <h3>To Be Paid</h3>
                     <select id="renew-options" name="renew-options">
-                        <option value="" disabled selected hidden>Select an option</option>
-                        <option value="option1">Option 1</option>
-                        <option value="option2">Option 2</option>
-                        <option value="option3">Option 3</option>
-                        <option value="option4">Option 4</option>
-                        <option value="option5">Option 5</option>
+                        <option value="" disabled selected hidden><?php echo $count.' new forms available';?></option>
+                        <?php
+                            $count = 0;
+                            foreach ($requests2 as $request) {
+                                $count++;
+                                $userRecordFor = $website->getUser($website->getUser($request['user'])['id']);
+                                echo  '<option data-name="'.htmlspecialchars($userRecordFor['first_name']).
+                                ' '.htmlspecialchars($userRecordFor['last_name']).
+                                '" data-email="'.htmlspecialchars($userRecordFor['email']).
+                                '" data-reason="'.htmlspecialchars($request['reason']).
+                                '" data-details="'.htmlspecialchars($request['details']).
+                                '" data-date="'.htmlspecialchars($request['date']).
+                                '" data-endDate="'.htmlspecialchars($request['dateAfter']).
+                                '" data-cost="'.htmlspecialchars($request['expenses']).
+                                '" data-id="'.$request['id'].
+                                '" data-endDate="'.htmlspecialchars($request['dateAfter']).
+                                '" data-timestamp="'.htmlspecialchars($request['timestamp']).
+                                '">'.htmlspecialchars($userRecordFor['first_name']).' '.
+                                htmlspecialchars($userRecordFor['last_name']).'</option>';
+                            }
+                        ?>
                     </select>
                     <div id="renew-details" class="dropdown-content">
                         <p><strong>Submitted By:</strong> <span id="renew-submitted-by">Jane Doe</span></p>
@@ -77,12 +95,13 @@
                             <li>Consectetur adipiscing elit.</li>
                         </ul>
                         <p><strong>Submission Date:</strong> <span id="renew-submission-date">2023-07-02 1:00 PM</span></p>
+                        <a href="/view-receipt?id=" target="_blank" class="view-rec">View Receipts</a><br><br>
                         <button id="renew-approve-btn" class="approve-btn">Confirm Payment</button>
                     </div>
                 </div>
             </section>
         </main>
     </div>
-    <script src="/assets/dashboard/style.js"></script>
+    <script src="/assets/dashboard/dash.js"></script>
 </body>
 </html>

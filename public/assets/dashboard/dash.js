@@ -23,10 +23,11 @@ document.addEventListener('DOMContentLoaded', function() {
             const endDate = selectedOption.getAttribute('data-enddate');
             const cost = selectedOption.getAttribute('data-cost');
             const timeStamp = selectedOption.getAttribute('data-timestamp');
-
+            const id = selectedOption.getAttribute('data-id');
 
             
             document.getElementById('payment-submitted-by').textContent = `${name} (${email})`;
+            paymentDetails.querySelector('.view-rec').href = '/view-receipt?id='+id.toString();
             
             // Clear and add items to the list
             const paymentRequestDetails = document.getElementById('payment-request-details');
@@ -46,29 +47,113 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    document.getElementById('payment-approve-btn').addEventListener('click', async()=>{
+        try {
+            // Get the ID
+            const id = paymentOptions.options[paymentOptions.selectedIndex].getAttribute('data-id');;
+    
+            // Perform your AJAX/Fetch login
+            const request = await fetch("/api/form/approve", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ id })
+            });
+    
+            // Check if the request was successful
+            if (!request.ok) {
+                throw new Error('Network response was not ok');
+            }
+    
+            // Parse the response as JSON
+            const response = await request.json();
+    
+            // Check for errors in the response and set the form message accordingly
+            if (response.error) {
+                alert(response.error);
+            } else {
+                alert('Success');
+                window.location.reload();
+            }
+        } catch (error) {
+            console.error('There was a problem with the fetch operation:', error);
+            setFormMessage(loginForm, "error", "An error occurred during login.");
+        }
+    })
+
     renewOptions.addEventListener('change', function() {
         if (renewOptions.value !== "") {
-            // Update the details dynamically if needed
-            // For now, we are showing static content
-            document.getElementById('renew-submitted-by').textContent = "Jane Doe";
+            // Get the selected option
+            const selectedOption = renewOptions.options[renewOptions.selectedIndex];
+
+            // Extract data attributes
+            const name = selectedOption.getAttribute('data-name');
+            const email = selectedOption.getAttribute('data-email');
+            const reason = selectedOption.getAttribute('data-reason');
+            const details = selectedOption.getAttribute('data-details');
+            const date = selectedOption.getAttribute('data-date');
+            const endDate = selectedOption.getAttribute('data-enddate');
+            const cost = selectedOption.getAttribute('data-cost');
+            const timeStamp = selectedOption.getAttribute('data-timestamp');
+            const id = selectedOption.getAttribute('data-id');
+
+            
+            document.getElementById('payment-submitted-by').textContent = `${name} (${email})`;
+            renewDetails.querySelector('.view-rec').href = '/view-receipt?id='+id.toString();
             
             // Clear and add items to the list
             const renewRequestDetails = document.getElementById('renew-request-details');
             renewRequestDetails.innerHTML = "";
-            const items = ["Consectetur adipiscing elit.", "Another renewal detail item."];
+            const items = [`Reason: ${reason}`, `Details: ${details}`, `Date From: ${formatDate(date)}`, `Date To: ${formatDate(endDate)}`, `Total Cost: ${cost}`];
             items.forEach(item => {
                 const li = document.createElement('li');
                 li.textContent = item;
                 renewRequestDetails.appendChild(li);
             });
-
-            document.getElementById('renew-submission-date').textContent = "2023-07-02 1:00 PM";
+            
+            document.getElementById('payment-submission-date').textContent = formatDate(timeStamp);
 
             renewDetails.classList.add('show');
         } else {
             renewDetails.classList.remove('show');
         }
     });
+
+    document.getElementById('renew-approve-btn').addEventListener('click', async()=>{
+        try {
+            // Get the ID
+            const id = renewOptions.options[renewOptions.selectedIndex].getAttribute('data-id');;
+    
+            // Perform your AJAX/Fetch login
+            const request = await fetch("/api/form/renew", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ id })
+            });
+    
+            // Check if the request was successful
+            if (!request.ok) {
+                throw new Error('Network response was not ok');
+            }
+    
+            // Parse the response as JSON
+            const response = await request.json();
+    
+            // Check for errors in the response and set the form message accordingly
+            if (response.error) {
+                alert(response.error);
+            } else {
+                alert('Success');
+                window.location.reload();
+            }
+        } catch (error) {
+            console.error('There was a problem with the fetch operation:', error);
+            setFormMessage(loginForm, "error", "An error occurred during login.");
+        }
+    })
 });
 
 

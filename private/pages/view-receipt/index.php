@@ -24,8 +24,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         if ($row) {
             // Check if the user is aloud to see this receipt
             $user = $website->getUser();
-            if($user['id'] != $row['user']){
-
+            if($user['id'] != $row['user'] && $user['id'] != $website->getUser($row['user'])['manager']){
+                giveApiError('Permission deinied');
             }
             
             // Get the receipts
