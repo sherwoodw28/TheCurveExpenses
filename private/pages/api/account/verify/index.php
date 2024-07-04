@@ -31,7 +31,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 
-    $user = $website->getUser();
+    // Get user
+    $stmt = $database->exe("SELECT * FROM `users` WHERE `verify_token` = ?", [$token]);
+
+    if ($stmt) {
+        $result = $stmt->get_result();
+        $user = $result->fetch_assoc();
+        if(!$user){
+            header('location: /dashboard');
+            exit();
+        }
+    }
 
     if($user['verify_token'] != $token){
         $website->giveApiError('An error has occurred. Invalid token');

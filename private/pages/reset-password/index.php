@@ -16,6 +16,7 @@
             <input type="email" id="email" name="email" required>
             <button type="submit">Send Reset Link</button>
         </form>
+        <a href="/profile">Go back</a>
     </div>
 </body>
 </html>

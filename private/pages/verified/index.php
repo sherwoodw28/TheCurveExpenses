@@ -8,7 +8,17 @@
     }
 
     $database = new Database;
-    $user = $website->getUser();
+    $stmt = $database->exe("SELECT * FROM `users` WHERE `verify_token` = ?", [$token]);
+
+
+    if ($stmt) {
+        $result = $stmt->get_result();
+        $user = $result->fetch_assoc();
+        if(!$user){
+            header('location: /dashboard');
+            exit();
+        }
+    }
 
     if($user['verify_token'] != $token){
         header('location: /dashboard');

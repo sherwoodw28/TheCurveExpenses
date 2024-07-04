@@ -263,7 +263,7 @@ class Mail{
 
                 // Recipients
                 $mail->setFrom($env->MAIL_FROM, $env->MAIL_FROM_NAME);
-                $mail->addAddress($to, 'Recipient Name');
+                $mail->addAddress($to, $to);
 
                 // Content
                 $mail->isHTML(true);
