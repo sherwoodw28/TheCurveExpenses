@@ -1,0 +1,38 @@
+{
+  "name": "the-curve-expenses",
+  "productName": "curve-expenses",
+  "version": "1.0.0",
+  "description": "The Curve Expenses App",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "publish": "electron-forge publish",
+    "lint": "echo \"No linting configured\"",
+    "build": "electron-packager . the-curve-expenses --platform=linux --arch=x64 --out=dist --overwrite --executable-name=the-curve-expenses",
+    "build-deb": "npm run build && electron-installer-debian --config debian.json",
+    "build-win": "electron-packager . the-curve-expenses --platform=win32 --arch=x64 --out=dist --overwrite"
+  },
+  "keywords": [],
+  "author": {
+    "name": "Max Dawson",
+    "email": "max_dawson@webworkshub.online"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "electron-squirrel-startup": "^1.0.0",
+    "rpmbuild": "^0.0.23"
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "^7.2.0",
+    "@electron-forge/maker-deb": "^7.2.0",
+    "@electron-forge/maker-rpm": "^7.2.0",
+    "@electron-forge/maker-squirrel": "^7.2.0",
+    "@electron-forge/maker-zip": "^7.2.0",
+    "@electron-forge/plugin-auto-unpack-natives": "^7.2.0",
+    "electron": "^31.1.0",
+    "electron-installer-debian": "^3.2.0",
+    "electron-packager": "^17.1.2"
+  }
+}

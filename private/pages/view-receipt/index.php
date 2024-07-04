@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         if ($row) {
             // Check if the user is aloud to see this receipt
             $user = $website->getUser();
-            if(true){
+            if($user['id'] != $row['user']){
 
             }
             

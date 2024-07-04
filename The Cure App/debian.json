@@ -1,0 +1,22 @@
+{
+    "src": "dist/the-curve-expenses-linux-x64",
+    "dest": "dist/installers/",
+    "arch": "amd64",
+    "options": {
+      "name": "the-curve-expenses",
+      "productName": "The Curve Expenses",
+      "genericName": "CurveExpenses",
+      "description": "The Curve Expenses App",
+      "version": "1.0.0",
+      "maintainer": "The Curve",
+      "homepage": "https://thecurve.io",
+      "icon": "./src/icon.png",
+      "categories": [
+        "Utility"
+      ],
+      "lintianOverrides": [
+        "changelog-file-missing-in-native-package"
+      ]
+    }
+  }
+  

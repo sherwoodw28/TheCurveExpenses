@@ -1,0 +1,18 @@
+Set the info in the package.json file
+
+Then next type npm i
+
+Feel free to edit any files, I suggest for now unless you need to edit the users files or anything then don't change the index.js file and don't change preload.js.
+
+To run the app use 'npm start' in the root folder. Not the src folder. DON'T rename that folder as it will break the imports.
+
+Type 'rs' in the terminal when the app is running to refresh
+
+To export run 'npm run make', it will take a while to export so just leave it. It will output the location that the file is saved after it is done.
+
+When you are finished, remove or comment out the line that says 'mainWindow.webContents.openDevTools();' to prevent dev tools opening.
+
+Put all scripts in script.js or add another file, just don't put anything in preload.js becasue that file works strangly and it's confusing to explain.
+
+Change file loaded by running this js `window.location.href = './jeff.html';` then odc change 'jeff.html' to the correct file.
+If you want a specific dir then you can do like './pages/cool_pages/jef.html'
