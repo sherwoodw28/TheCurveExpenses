@@ -57,3 +57,6 @@ input[type="file"] {
 #message{
     color: rgb(169, 67, 67);
 }
+a[href="/dashboard"] img{
+    position: absolute;
+}

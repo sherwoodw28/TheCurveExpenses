@@ -10,6 +10,7 @@
 <body>
     <div class="container">
         <h2>Approval Form</h2>
+        <a href="/dashboard"><img src="https://site-assets.fontawesome.com/releases/v6.5.2/svgs/solid/chevron-left.svg" width="10" alt=""></a>
         <form id="form">
             <p id="message"></p>
             <label for="reason">Reason for Request: <span style="color: red;">*</span></label>
@@ -25,7 +26,7 @@
             <input type="datetime-local" id="dateNeededTo" name="dateNeededTo" required>
 
             <label for="totalCost">Total Cost: <span style="color: red;">*</span> (only applicable to Employees directly making the booking)</label>
-            <input type="number" id="totalCost" name="totalCost" required>
+            <input type="number" id="totalCost" name="totalCost" required step="any">
 
             <label for="fileUpload">Please upload all receipts: <span style="color: red;">*</span></label>
             <input type="file" id="fileUpload" name="fileUpload" required>

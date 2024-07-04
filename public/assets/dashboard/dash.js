@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Clear and add items to the list
             const paymentRequestDetails = document.getElementById('payment-request-details');
             paymentRequestDetails.innerHTML = "";
-            const items = [`Reason: ${reason}`, `Details: ${details}`, `Date From: ${formatDate(date)}`, `Date To: ${formatDate(endDate)}`, `Total Cost: ${cost}`];
+            const items = [`Reason: ${reason}`, `Details: ${details}`, `Date From: ${formatDate(date)}`, `Date To: ${formatDate(endDate)}`, `Total Cost: £${cost}`];
             items.forEach(item => {
                 const li = document.createElement('li');
                 li.textContent = item;
@@ -54,6 +54,41 @@ document.addEventListener('DOMContentLoaded', function() {
     
             // Perform your AJAX/Fetch login
             const request = await fetch("/api/form/approve", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ id })
+            });
+    
+            // Check if the request was successful
+            if (!request.ok) {
+                throw new Error('Network response was not ok');
+            }
+    
+            // Parse the response as JSON
+            const response = await request.json();
+    
+            // Check for errors in the response and set the form message accordingly
+            if (response.error) {
+                alert(response.error);
+            } else {
+                alert('Success');
+                window.location.reload();
+            }
+        } catch (error) {
+            console.error('There was a problem with the fetch operation:', error);
+            setFormMessage(loginForm, "error", "An error occurred during login.");
+        }
+    })
+
+    document.getElementById('payment-refuse-btn').addEventListener('click', async()=>{
+        try {
+            // Get the ID
+            const id = paymentOptions.options[paymentOptions.selectedIndex].getAttribute('data-id');;
+    
+            // Perform your AJAX/Fetch login
+            const request = await fetch("/api/form/refuse", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -105,7 +140,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Clear and add items to the list
             const renewRequestDetails = document.getElementById('renew-request-details');
             renewRequestDetails.innerHTML = "";
-            const items = [`Reason: ${reason}`, `Details: ${details}`, `Date From: ${formatDate(date)}`, `Date To: ${formatDate(endDate)}`, `Total Cost: ${cost}`];
+            const items = [`Reason: ${reason}`, `Details: ${details}`, `Date From: ${formatDate(date)}`, `Date To: ${formatDate(endDate)}`, `Total Cost: £${cost}`];
             items.forEach(item => {
                 const li = document.createElement('li');
                 li.textContent = item;

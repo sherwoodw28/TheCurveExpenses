@@ -32,11 +32,13 @@
                 <div class="card">
                     <h3>To Review</h3>
                     <select id="payment-options" name="payment-options">
-                        <option value="" disabled selected hidden><?php echo $count.' new forms available';?></option>
                         <?php
+                            $count = 0;
+                            $out= '';
                             foreach ($requests as $request) {
+                                $count++;
                                 $userRecordFor = $website->getUser($website->getUser($request['user'])['id']);
-                                echo  '<option data-name="'.htmlspecialchars($userRecordFor['first_name']).
+                                $out .= '<option data-name="'.htmlspecialchars($userRecordFor['first_name']).
                                 ' '.htmlspecialchars($userRecordFor['last_name']).
                                 '" data-email="'.htmlspecialchars($userRecordFor['email']).
                                 '" data-reason="'.htmlspecialchars($request['reason']).
@@ -50,6 +52,8 @@
                                 '">'.htmlspecialchars($userRecordFor['first_name']).' '.
                                 htmlspecialchars($userRecordFor['last_name']).'</option>';
                             }
+                            echo "<option value disabled selected hidden>$count new forms available</option>";
+                            echo $out;
                         ?>
                     </select>
                     <div id="payment-details" class="dropdown-content">
@@ -61,18 +65,19 @@
                         <p><strong>Submission Date:</strong> <span id="payment-submission-date">2023-07-01 12:00 PM</span></p>
                         <a href="/view-receipt?id=" target="_blank" class="view-rec">View Receipts</a><br><br>
                         <button id="payment-approve-btn" class="approve-btn">Confirm Approval</button>
+                        <button id="payment-refuse-btn" class="approve-btn">Refuse Approval</button>
                     </div>
                 </div>
                 <div class="card">
                     <h3>To Be Paid</h3>
                     <select id="renew-options" name="renew-options">
-                        <option value="" disabled selected hidden><?php echo $count.' new forms available';?></option>
                         <?php
                             $count = 0;
+                            $out= '';
                             foreach ($requests2 as $request) {
                                 $count++;
                                 $userRecordFor = $website->getUser($website->getUser($request['user'])['id']);
-                                echo  '<option data-name="'.htmlspecialchars($userRecordFor['first_name']).
+                                $out .= '<option data-name="'.htmlspecialchars($userRecordFor['first_name']).
                                 ' '.htmlspecialchars($userRecordFor['last_name']).
                                 '" data-email="'.htmlspecialchars($userRecordFor['email']).
                                 '" data-reason="'.htmlspecialchars($request['reason']).
@@ -86,6 +91,9 @@
                                 '">'.htmlspecialchars($userRecordFor['first_name']).' '.
                                 htmlspecialchars($userRecordFor['last_name']).'</option>';
                             }
+
+                            echo "<option value disabled selected hidden>$count new forms available</option>";
+                            echo $out;
                         ?>
                     </select>
                     <div id="renew-details" class="dropdown-content">
