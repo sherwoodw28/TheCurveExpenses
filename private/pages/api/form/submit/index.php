@@ -8,8 +8,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Validate and process the received data
     $reason = $_POST['reason'];
     $details = $_POST['details'];
-    $dateNeededFrom = $_POST['dateNeededFrom'];
-    $dateNeededTo = $_POST['dateNeededTo'];
+    $dateNeededFrom = new DateTime($_POST['dateNeededFrom']); $dateNeededFrom = $dateNeededFrom->format('Y-m-d H:i:s');
+    $dateNeededTo = new DateTime($_POST['dateNeededTo']); $dateNeededTo = $dateNeededTo->format('Y-m-d H:i:s');
     $totalCost = $_POST['totalCost'];
     $assistance = intval($_POST['assistance']);
     $comments = $_POST['comments'];
@@ -45,21 +45,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Convert receipts array to JSON
     $receiptsJson = json_encode($receipts);
 
+    // Get the user
+    $user = $website->getUser();
+
     // Insert the data into the records table
-    $stmt = $database->exe("INSERT INTO `records`(`date`, `status`, `expenses`, `receipts`, `assistance`, `comment`) VALUES (?,?,?,?,?,?)", [
-        date('Y-m-d H:i:s'), // date
+    $stmt = $database->exe("INSERT INTO `records`(`date`, `dateAfter`, `status`, `expenses`, `receipts`, `assistance`, `comment`, `user`, `reason`, `details`) VALUES (?,?,?,?,?,?,?,?,?,?)", [
+        $dateNeededFrom, // date from
+        $dateNeededTo, // date to
         0, // status
         $totalCost, // expenses
         $receiptsJson, // receipts
         $assistance, // assistance
-        $comments // comment
+        $comments, // comment
+        $user['id'],
+        $reason,
+        $details
     ]);
 
-    if ($stmt) {
-        $website->giveApiResponse([
-            'status' => 'ok'
-        ]);
-    } else {
+    if (!$stmt) {
         $website->giveApiError('Error inserting record into database.');
     }
+
+    $managerID = $user['manager'];
+
+    $managers = $website->getAllUsers();
+
+    foreach ($managers as $tempManager) {
+        if($tempManager['id'] == $managerID){
+            $manager = $tempManager;
+        }
+    }
+
+    // Send the email
+    $mail = new Mail;
+    $mail->sendMail($manager['email'], 'New request submitted', str_replace('{{MANAGER}}', $manager['first_name'], (str_replace('{{NAME}}', $user['first_name'], file_get_contents(dirname(__FILE__)."/../../../../../email-htmls/approvalRequest.html")))));
+
+    $website->giveApiResponse([
+        'status' => 'ok'
+    ]);
 }

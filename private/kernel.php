@@ -1,16 +1,33 @@
 <?php
 class Website {
     private $database;
-    public function getUser(){
+    public function getUser($id = false){
         if(!$this->database){
             $this->database = new Database;
         }
-        if(isset($_COOKIE['session'])) {
-            $session = $_COOKIE['session'];
-    
-            // Check the session is valid
-            $stmt = $this->database->exe("SELECT * FROM `users` WHERE `session` = ?", [$session]);
-    
+
+        if(!$id){
+            if(isset($_COOKIE['session'])) {
+                $session = $_COOKIE['session'];
+        
+                // Check the session is valid
+                $stmt = $this->database->exe("SELECT * FROM `users` WHERE `session` = ?", [$session]);
+        
+                if ($stmt) {
+                    $result = $stmt->get_result();
+                    $row = $result->fetch_assoc();
+                    if($row){
+                        return $row;
+                    } else{
+                        return false;
+                    }
+                }
+            } else {
+                return false;
+            }
+        } else{
+            $stmt = $this->database->exe("SELECT * FROM `users` WHERE `id` = ?", [$id]);
+        
             if ($stmt) {
                 $result = $stmt->get_result();
                 $row = $result->fetch_assoc();
@@ -20,8 +37,6 @@ class Website {
                     return false;
                 }
             }
-        } else {
-            return false;
         }
     }
     public function getWholeSlug(){
@@ -91,6 +106,30 @@ class Website {
             $row = $result->fetch_all(MYSQLI_ASSOC);
             if($row){
                 return $row;
+            } else{
+                return false;
+            }
+        }
+    }
+    public function getRequests($user, $type){
+        if(!$this->database){
+            $this->database = new Database;
+        }
+
+        // Get all the requets using the ID of the user
+        $stmt = $this->database->exe("SELECT * FROM `records` WHERE `status` = ?", [ $type ]);
+
+        if ($stmt) {
+            $result = $stmt->get_result();
+            $row = $result->fetch_all(MYSQLI_ASSOC);
+            if($row){
+                $records = [];
+                foreach ($row as $record) {
+                    if($user['id'] == $this->getUser($record['user'])['manager']){
+                        array_push($records, $record);
+                    }
+                }
+                return $records;
             } else{
                 return false;
             }
@@ -174,7 +213,7 @@ class Database {
 }
 class AccountTools{
     public function encryptPassword($password, $hash){
-        $secret_key = "ydygfuireytdfviute65yf5et".$hash;
+        $secret_key = "ydygfuireytdfviute65yf5et".$hash.$password;
         $cipher = "aes-256-cbc";
         $options = 0;
         $iv = "74hf8rh3ng06hdgr";

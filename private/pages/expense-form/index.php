@@ -19,10 +19,10 @@
             <input type="text" id="details" name="details" required>
 
             <label for="dateNeededFrom">Date Required from: <span style="color: red;">*</span> (dd/mm/yyyy)</label>
-            <input type="date" id="dateNeededFrom" name="dateNeededFrom" required>
+            <input type="datetime-local" id="dateNeededFrom" name="dateNeededFrom" required>
 
             <label for="dateNeededTo">End date: <span style="color: red;">*</span> (dd/mm/yyyy)</label>
-            <input type="date" id="dateNeededTo" name="dateNeededTo" required>
+            <input type="datetime-local" id="dateNeededTo" name="dateNeededTo" required>
 
             <label for="totalCost">Total Cost: <span style="color: red;">*</span> (only applicable to Employees directly making the booking)</label>
             <input type="number" id="totalCost" name="totalCost" required>

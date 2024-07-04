@@ -3,6 +3,9 @@
     $website->loginRedirect(1);
 
     $accountTools = new AccountTools;
+    $user = $website->getUser();
+
+    $requests = $website->getRequests($user, '0');
 ?>
 
 <!DOCTYPE html>
@@ -20,7 +23,7 @@
             <img onclick="window.location.href = '/profile'" style="cursor: pointer;" src="<?php echo $accountTools->getPFP($website->getUser()['email']);?>" alt="Profile Picture" class="profile-picture">
             <h1 onclick="window.location.href = '/profile'" style="cursor: pointer;">Welcome, <?php echo $website->getUser()['first_name'];?></h1>
             <div class="header-buttons">
-                <button onclick="window.location.href = '/expense_form';" class="header-btn">New Form</button>
+                <button onclick="window.location.href = '/expense-form';" class="header-btn">New Form</button>
             </div>
         </header>
         <main>
@@ -29,11 +32,23 @@
                     <h3>To Review</h3>
                     <select id="payment-options" name="payment-options">
                         <option value="" disabled selected hidden>Select an option</option>
-                        <option value="option1">Option 1</option>
-                        <option value="option2">Option 2</option>
-                        <option value="option3">Option 3</option>
-                        <option value="option4">Option 4</option>
-                        <option value="option5">Option 5</option>
+                        <?php
+                            foreach ($requests as $request) {
+                                $userRecordFor = $website->getUser($website->getUser($request['user'])['id']);
+                                echo  '<option data-name="'.htmlspecialchars($userRecordFor['first_name']).
+                                ' '.htmlspecialchars($userRecordFor['last_name']).
+                                '" data-email="'.htmlspecialchars($userRecordFor['email']).
+                                '" data-reason="'.htmlspecialchars($request['reason']).
+                                '" data-details="'.htmlspecialchars($request['details']).
+                                '" data-date="'.htmlspecialchars($request['date']).
+                                '" data-endDate="'.htmlspecialchars($request['dateAfter']).
+                                '" data-cost="'.htmlspecialchars($request['expenses']).
+                                '" data-endDate="'.htmlspecialchars($request['dateAfter']).
+                                '" data-timestamp="'.htmlspecialchars($request['timestamp']).
+                                '" value="'.$request['id'].'">'.htmlspecialchars($userRecordFor['first_name']).' '.
+                                htmlspecialchars($userRecordFor['last_name']).'</option>';
+                            }
+                        ?>
                     </select>
                     <div id="payment-details" class="dropdown-content">
                         <p><strong>Submitted By:</strong> <span id="payment-submitted-by">John Doe</span></p>
