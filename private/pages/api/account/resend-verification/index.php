@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Resend the email
-    $url = 'https://thecurve.odysseynetw.co.uk/verified?token='.$user['verify_token'];
+    $url = $website->getDomain().'/verified?token='.$user['verify_token'];
 
     // Send the emaik
     $mail->sendMail($user['email'], 'Please confirm your email', str_replace('{{URL}}', $url, (str_replace('{{NAME}}', $user->first_name, file_get_contents(dirname(__FILE__)."/../../../../../email-htmls/verifyEmail.html")))));

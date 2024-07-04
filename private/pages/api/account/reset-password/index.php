@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    $url = 'https://thecurve.odysseynetw.co.uk/confirm-password?token='.$user['password_token'];
+    $url = $website->getDomain().'/confirm-password?token='.$user['password_token'];
 
     $mail->sendMail($email, 'Password Reset', str_replace('{{URL}}', $url, file_get_contents(dirname(__FILE__)."/../../../../../email-htmls/forgotPassword.html")));
     $website->giveApiResponse([

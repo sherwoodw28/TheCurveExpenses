@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $data['password'];
 
     $stmt = $database->exe("INSERT INTO `users`(`first_name`, `last_name`, `email`, `manager`, `notification`, `password`, `session`, `password_token`, `hash`, `verify_token`) VALUES (?,?,?,?,?,?,?,?,?,?)", [ $first_name, $last_name, $email, 0, 0, $accountTools->encryptPassword($password, $hash), $session, $resetToken, $hash, $verifyToken ]);
-    $url = 'https://thecurve.odysseynetw.co.uk/verified?token='.$verifyToken;
+    $url = $website->getDomain().'?token='.$verifyToken;
     
     $mail->sendMail($email, 'Please confirm your email', str_replace('{{URL}}', $url, (str_replace('{{NAME}}', $first_name, file_get_contents(dirname(__FILE__)."/../../../../../email-htmls/verifyEmail.html")))));
     $website->giveApiResponse([
