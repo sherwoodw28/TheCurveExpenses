@@ -19,3 +19,48 @@ This is created using:
 chmod 777 ./private/pages/api/form/submit/images/
 ```
 4) Setup a WebServer in the `./public` folder
+5) To install the database, create a database and run the following SQL on it:
+```SQL
+CREATE TABLE `records` (
+  `id` bigint(20) NOT NULL,
+  `user` bigint(20) NOT NULL,
+  `reason` text NOT NULL,
+  `details` text NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  `date` timestamp NOT NULL,
+  `dateAfter` timestamp NOT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 0,
+  `expenses` text NOT NULL,
+  `receipts` text NOT NULL,
+  `assistance` tinyint(4) NOT NULL,
+  `comment` text NOT NULL
+)
+```
+
+```SQL
+CREATE TABLE `users` (
+  `id` bigint(20) NOT NULL,
+  `first_name` text NOT NULL,
+  `last_name` text NOT NULL,
+  `email` text NOT NULL,
+  `date` datetime NOT NULL DEFAULT current_timestamp(),
+  `manager` bigint(20) NOT NULL,
+  `notification` int(11) NOT NULL,
+  `admin` tinyint(4) NOT NULL DEFAULT 0,
+  `password` text NOT NULL,
+  `session` text NOT NULL,
+  `password_token` text NOT NULL,
+  `hash` text NOT NULL,
+  `verify_token` text NOT NULL,
+  `verified` tinyint(4) NOT NULL DEFAULT 0
+)
+```
+
+```SQL
+ALTER TABLE `records`
+  ADD PRIMARY KEY (`id`);
+```
+```SQL
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
+```
