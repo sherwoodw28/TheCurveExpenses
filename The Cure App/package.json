@@ -12,12 +12,13 @@
     "lint": "echo \"No linting configured\"",
     "build": "electron-packager . the-curve-expenses --platform=linux --arch=x64 --out=dist --overwrite --executable-name=the-curve-expenses",
     "build-deb": "npm run build && electron-installer-debian --config debian.json",
-    "build-win": "electron-packager . the-curve-expenses --platform=win32 --arch=x64 --out=dist --overwrite"
+    "build-win": "electron-packager . the-curve-expenses --platform=win32 --arch=x64 --out=dist --overwrite",
+    "build-winnew": "electron-builder"
   },
   "keywords": [],
   "author": {
-    "name": "Max Dawson",
-    "email": "max_dawson@webworkshub.online"
+    "name": "The Curve",
+    "email": "contact@thecurve.io"
   },
   "license": "MIT",
   "dependencies": {
@@ -32,16 +33,18 @@
     "@electron-forge/maker-zip": "^7.2.0",
     "@electron-forge/plugin-auto-unpack-natives": "^7.2.0",
     "electron": "^31.1.0",
+    "electron-builder": "^24.13.3",
     "electron-packager": "^17.1.2"
   },
   "build": {
-    "appId": "com.thecurve.curve-expenses",
+    "productName": "Curve Expenses",
+    "appId": "com.example.curve-expenses",
     "directories": {
-      "output": "dist"
+      "output": "dist/windows"
     },
     "win": {
-      "target": "nsis",
-      "icon": "src/icon.ico"
+      "icon": "./src/icon.ico",
+      "target": "nsis"
     }
   }
 }
