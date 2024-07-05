@@ -111,11 +111,21 @@ class Website {
             }
         }
     }
-    public function getRequests($user, $type){
+    public function getRequests($user = false, $type){
         if(!$this->database){
             $this->database = new Database;
         }
 
+        if(!$user){
+            // Get all the requets
+            $stmt = $this->database->exe("SELECT * FROM `records` WHERE `status` = ?", [ $type ]);
+
+            if ($stmt) {
+                $result = $stmt->get_result();
+                $row = $result->fetch_all(MYSQLI_ASSOC);
+                return $row;
+            }
+        }
         // Get all the requets using the ID of the user
         $stmt = $this->database->exe("SELECT * FROM `records` WHERE `status` = ?", [ $type ]);
 

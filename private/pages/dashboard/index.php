@@ -7,6 +7,7 @@
 
     $requests = $website->getRequests($user, '0');
     $requests2 = $website->getRequests($user, '1');
+    $requests3 = $website->getRequests($user, '2');
 ?>
 
 <!DOCTYPE html>
@@ -27,89 +28,101 @@
                 <button onclick="window.location.href = '/expense-form';" class="header-btn"> + New Form</button>
             </div>
         </header>
-        <main>
-            <section id="user">
-                <div class="card">
-                    <h3>To Review</h3>
-                    <select id="payment-options" name="payment-options">
-                        <?php
-                            $count = 0;
-                            $out= '';
-                            foreach ($requests as $request) {
-                                $count++;
-                                $userRecordFor = $website->getUser($website->getUser($request['user'])['id']);
-                                $out .= '<option data-name="'.htmlspecialchars($userRecordFor['first_name']).
-                                ' '.htmlspecialchars($userRecordFor['last_name']).
-                                '" data-email="'.htmlspecialchars($userRecordFor['email']).
-                                '" data-reason="'.htmlspecialchars($request['reason']).
-                                '" data-details="'.htmlspecialchars($request['details']).
-                                '" data-date="'.htmlspecialchars($request['date']).
-                                '" data-endDate="'.htmlspecialchars($request['dateAfter']).
-                                '" data-cost="'.htmlspecialchars($request['expenses']).
-                                '" data-id="'.$request['id'].
-                                '" data-endDate="'.htmlspecialchars($request['dateAfter']).
-                                '" data-timestamp="'.htmlspecialchars($request['timestamp']).
-                                '" data-comment="'.htmlspecialchars($request['comment']).
-                                '">'.htmlspecialchars($userRecordFor['first_name']).' '.
-                                htmlspecialchars($userRecordFor['last_name']).'</option>';
-                            }
-                            echo "<option value disabled selected hidden>$count new forms available</option>";
-                            echo $out;
-                        ?>
-                    </select>
-                    <div id="payment-details" class="dropdown-content">
-                        <p><strong>Submitted By:</strong> <span id="payment-submitted-by">John Doe</span></p>
-                        <p><strong>Request Details:</strong></p>
-                        <ul id="payment-request-details">
-                            <li>Lorem ipsum dolor sit amet.</li>
-                        </ul>
-                        <p><strong>Submission Date:</strong> <span id="payment-submission-date">2023-07-01 12:00 PM</span></p>
-                        <a href="/view-receipt?id=" target="_blank" class="view-rec">View Receipts</a><br><br>
-                        <button id="payment-approve-btn" class="approve-btn">Confirm Approval</button>
-                        <button id="payment-refuse-btn" class="approve-btn">Refuse Approval</button>
-                    </div>
-                </div>
-                <div class="card">
-                    <h3>To Be Paid</h3>
-                    <select id="renew-options" name="renew-options">
-                        <?php
-                            $count = 0;
-                            $out= '';
-                            foreach ($requests2 as $request) {
-                                $count++;
-                                $userRecordFor = $website->getUser($website->getUser($request['user'])['id']);
-                                $out .= '<option data-name="'.htmlspecialchars($userRecordFor['first_name']).
-                                ' '.htmlspecialchars($userRecordFor['last_name']).
-                                '" data-email="'.htmlspecialchars($userRecordFor['email']).
-                                '" data-reason="'.htmlspecialchars($request['reason']).
-                                '" data-details="'.htmlspecialchars($request['details']).
-                                '" data-date="'.htmlspecialchars($request['date']).
-                                '" data-endDate="'.htmlspecialchars($request['dateAfter']).
-                                '" data-cost="'.htmlspecialchars($request['expenses']).
-                                '" data-id="'.$request['id'].
-                                '" data-endDate="'.htmlspecialchars($request['dateAfter']).
-                                '" data-timestamp="'.htmlspecialchars($request['timestamp']).
-                                '">'.htmlspecialchars($userRecordFor['first_name']).' '.
-                                htmlspecialchars($userRecordFor['last_name']).'</option>';
-                            }
+        <div id="main">
+            <div class="card" id="review">
+                <h2 class="title">Review</h2>
+                <?php
+                    foreach ($requests as $request) {
+                        $userRecordFor = $website->getUser($website->getUser($request['user'])['id']);
+                        echo '<div class="item" data-name="'.htmlspecialchars($userRecordFor['first_name']).
+                        ' '.htmlspecialchars($userRecordFor['last_name']).
+                        '" data-email="'.htmlspecialchars($userRecordFor['email']).
+                        '" data-reason="'.htmlspecialchars($request['reason']).
+                        '" data-details="'.htmlspecialchars($request['details']).
+                        '" data-date="'.htmlspecialchars($request['date']).
+                        '" data-endDate="'.htmlspecialchars($request['dateAfter']).
+                        '" data-cost="'.htmlspecialchars($request['expenses']).
+                        '" data-id="'.$request['id'].
+                        '" data-endDate="'.htmlspecialchars($request['dateAfter']).
+                        '" data-timestamp="'.htmlspecialchars($request['timestamp']).
+                        '" data-comment="'.htmlspecialchars($request['comment']).
+                        '">'.'<img src="https://site-assets.fontawesome.com/releases/v6.5.2/svgs/solid/grip.svg">'.
+                        '<h3 class="name">'.htmlspecialchars($request['reason']).' ('.
+                        htmlspecialchars($userRecordFor['first_name']).' '.
+                        htmlspecialchars($userRecordFor['last_name']).')</h3></div>';
+                    }
+                ?>
+            </div>
 
-                            echo "<option value disabled selected hidden>$count new forms available</option>";
-                            echo $out;
-                        ?>
-                    </select>
-                    <div id="renew-details" class="dropdown-content">
-                        <p><strong>Submitted By:</strong> <span id="renew-submitted-by">Jane Doe</span></p>
-                        <p><strong>Request Details:</strong></p>
-                        <ul id="renew-request-details">
-                            <li>Consectetur adipiscing elit.</li>
-                        </ul>
-                        <p><strong>Submission Date:</strong> <span id="renew-submission-date">2023-07-02 1:00 PM</span></p>
-                        <a href="/view-receipt?id=" target="_blank" class="view-rec">View Receipts</a><br><br>
-                        <button id="renew-approve-btn" class="approve-btn">Confirm Payment</button>
-                    </div>
-                </div>
-            </section>
-        </main>
+            <div class="card" id="approve">
+                <h2 class="title">Approved</h2>
+                <?php
+                    foreach ($requests2 as $request) {
+                        $userRecordFor = $website->getUser($website->getUser($request['user'])['id']);
+                        echo '<div class="item" data-name="'.htmlspecialchars($userRecordFor['first_name']).
+                        ' '.htmlspecialchars($userRecordFor['last_name']).
+                        '" data-email="'.htmlspecialchars($userRecordFor['email']).
+                        '" data-reason="'.htmlspecialchars($request['reason']).
+                        '" data-details="'.htmlspecialchars($request['details']).
+                        '" data-date="'.htmlspecialchars($request['date']).
+                        '" data-endDate="'.htmlspecialchars($request['dateAfter']).
+                        '" data-cost="'.htmlspecialchars($request['expenses']).
+                        '" data-id="'.$request['id'].
+                        '" data-endDate="'.htmlspecialchars($request['dateAfter']).
+                        '" data-timestamp="'.htmlspecialchars($request['timestamp']).
+                        '" data-comment="'.htmlspecialchars($request['comment']).
+                        '">'.'<img src="https://site-assets.fontawesome.com/releases/v6.5.2/svgs/solid/grip.svg">'.
+                        '<h3 class="name">'.htmlspecialchars($request['reason']).'('.
+                        htmlspecialchars($userRecordFor['first_name']).' '.
+                        htmlspecialchars($userRecordFor['last_name']).')</h3></div>';
+                    }
+                ?>
+            </div>
+
+            <div class="card" id="renew">
+                <h2 class="title">Paid</h2>
+                <?php
+                    foreach ($requests3 as $request) {
+                        $userRecordFor = $website->getUser($website->getUser($request['user'])['id']);
+                        echo '<div class="item" data-name="'.htmlspecialchars($userRecordFor['first_name']).
+                        ' '.htmlspecialchars($userRecordFor['last_name']).
+                        '" data-email="'.htmlspecialchars($userRecordFor['email']).
+                        '" data-reason="'.htmlspecialchars($request['reason']).
+                        '" data-details="'.htmlspecialchars($request['details']).
+                        '" data-date="'.htmlspecialchars($request['date']).
+                        '" data-endDate="'.htmlspecialchars($request['dateAfter']).
+                        '" data-cost="'.htmlspecialchars($request['expenses']).
+                        '" data-id="'.$request['id'].
+                        '" data-endDate="'.htmlspecialchars($request['dateAfter']).
+                        '" data-timestamp="'.htmlspecialchars($request['timestamp']).
+                        '" data-comment="'.htmlspecialchars($request['comment']).
+                        '">'.'<img src="https://site-assets.fontawesome.com/releases/v6.5.2/svgs/solid/grip.svg">'.
+                        '<h3 class="name">'.htmlspecialchars($request['reason']).'('.
+                        htmlspecialchars($userRecordFor['first_name']).' '.
+                        htmlspecialchars($userRecordFor['last_name']).')</h3></div>';
+                    }
+                ?>
+            </div>
+
+            <div class="trash">
+                <img src="https://site-assets.fontawesome.com/releases/v6.5.2/svgs/solid/trash-can.svg" alt="" srcset="">
+            </div>
+            <div class="popup" style="display: none;">
+                <img src="https://site-assets.fontawesome.com/releases/v6.5.2/svgs/solid/circle-xmark.svg" alt="">
+                <h3 class="title">POPUP NAME</h3>
+                <p class="content">
+                    <b>Submitted By:</b> NAME (EMAIL) <br>
+                    <b>Reason:</b> REASON <br>
+                    <b>Details:</b> DETAILS <br>
+                    <b>Date From:</b> DATE FROM <br>
+                    <b>Date To:</b> DATE TO <br>
+                    <b>Total Cost:</b> COST <br>
+                    <b>Comment:</b> COMMENT <br>
+                    <b>Submission Date:</b> DATE <br>
+                    <a href="">View Receipts</a>
+                </p>
+            </div>
+        </div>
     </div>
     <script src="/assets/dashboard/dash.js"></script>
 </body>

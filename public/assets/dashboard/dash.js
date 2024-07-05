@@ -1,197 +1,118 @@
+// Old
+// OTHER OLD CODE ON GITHUB
+
+
+// New
 document.addEventListener('DOMContentLoaded', function() {
-    const paymentOptions = document.getElementById('payment-options');
-    const paymentDetails = document.getElementById('payment-details');
-    const renewOptions = document.getElementById('renew-options');
-    const renewDetails = document.getElementById('renew-details');
+    const dragElements = document.querySelectorAll('.item');
 
-    window.onload = function() {
-        document.getElementById('payment-options').selectedIndex = 0;
-        document.getElementById('renew-options').selectedIndex = 0;
-    };
+    // Make them draggable
+    Array.from(dragElements).forEach(element => {
+        element.addEventListener('mousedown', ()=>{
+            element.style['width'] = window.getComputedStyle(element).width;
 
-    paymentOptions.addEventListener('change', function() {
-        if (paymentOptions.value !== "") {
-            // Get the selected option
-            const selectedOption = paymentOptions.options[paymentOptions.selectedIndex];
+            document.addEventListener("mousemove", setDragMode);
 
-            // Extract data attributes
-            const name = selectedOption.getAttribute('data-name');
-            const email = selectedOption.getAttribute('data-email');
-            const reason = selectedOption.getAttribute('data-reason');
-            const details = selectedOption.getAttribute('data-details');
-            const date = selectedOption.getAttribute('data-date');
-            const endDate = selectedOption.getAttribute('data-enddate');
-            const cost = selectedOption.getAttribute('data-cost');
-            const timeStamp = selectedOption.getAttribute('data-timestamp');
-            const id = selectedOption.getAttribute('data-id');
-            const comment = selectedOption.getAttribute('data-comment');
-            
-            document.getElementById('payment-submitted-by').textContent = `${name} (${email})`;
-            paymentDetails.querySelector('.view-rec').href = '/view-receipt?id='+id.toString();
-            
-            // Clear and add items to the list
-            const paymentRequestDetails = document.getElementById('payment-request-details');
-            paymentRequestDetails.innerHTML = "";
-            const items = [`Reason: ${reason}`, `Details: ${details}`, `Date From: ${formatDate(date)}`, `Date To: ${formatDate(endDate)}`, `Total Cost: £${cost}`, `Comment: ${comment}`];
-            items.forEach(item => {
-                const li = document.createElement('li');
-                li.textContent = item;
-                paymentRequestDetails.appendChild(li);
-            });
-            
-            document.getElementById('payment-submission-date').textContent = formatDate(timeStamp);
+            setTimeout(()=>{
+                document.removeEventListener("mousemove", setDragMode);
 
-            paymentDetails.classList.add('show');
-        } else {
-            paymentDetails.classList.remove('show');
+                if(!element.classList.contains('attach')){
+                    openPopup(element);
+                }
+            }, 60);
+
+            function setDragMode(){
+                element.classList.add('attach');
+            }
+        })
+    });
+
+    document.addEventListener("mousemove", (event) => {
+        const elements = document.querySelectorAll(".card, .trash");
+        const closestElement = getClosestElement(elements, event.clientX, event.clientY);
+
+        // Remove existing active cards class
+        Array.from(document.querySelectorAll('.card.active, .trash.active')).forEach(element => {
+            element.classList.remove('active');
+        });
+
+        if(document.querySelector('.attach')){ // Check if we are dragging
+            closestElement.classList.add('active');
         }
     });
 
-    document.getElementById('payment-approve-btn').addEventListener('click', async()=>{
-        try {
-            // Get the ID
-            const id = paymentOptions.options[paymentOptions.selectedIndex].getAttribute('data-id');;
-    
-            // Perform your AJAX/Fetch login
-            const request = await fetch("/api/form/approve", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ id })
-            });
-    
-            // Check if the request was successful
-            if (!request.ok) {
-                throw new Error('Network response was not ok');
+    // Stop dragging
+    document.addEventListener('mouseup', ()=>{
+        Array.from(document.querySelectorAll('.attach')).forEach(element => {
+            element.classList.remove('attach');
+
+            // Run the operations
+            if(document.querySelector('.card.active') && document.querySelector('.card.active').getAttribute('id')){
+                opperation(parseInt(element.getAttribute('data-id')), document.querySelector('.card.active').getAttribute('id'));
+                document.querySelector('.card.active').append(element);
             }
-    
-            // Parse the response as JSON
-            const response = await request.json();
-    
-            // Check for errors in the response and set the form message accordingly
-            if (response.error) {
-                alert(response.error);
-            } else {
-                alert('Success');
-                window.location.reload();
+            if(document.querySelector('.active.trash')){
+                opperation(parseInt(element.getAttribute('data-id')), 'refuse');
+
+                element.remove();
             }
-        } catch (error) {
-            console.error('There was a problem with the fetch operation:', error);
-            setFormMessage(loginForm, "error", "An error occurred during login.");
-        }
+        });
     })
 
-    document.getElementById('payment-refuse-btn').addEventListener('click', async()=>{
-        try {
-            // Get the ID
-            const id = paymentOptions.options[paymentOptions.selectedIndex].getAttribute('data-id');;
-    
-            // Perform your AJAX/Fetch login
-            const request = await fetch("/api/form/refuse", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ id })
-            });
-    
-            // Check if the request was successful
-            if (!request.ok) {
-                throw new Error('Network response was not ok');
-            }
-    
-            // Parse the response as JSON
-            const response = await request.json();
-    
-            // Check for errors in the response and set the form message accordingly
-            if (response.error) {
-                alert(response.error);
-            } else {
-                alert('Success');
-                window.location.reload();
-            }
-        } catch (error) {
-            console.error('There was a problem with the fetch operation:', error);
-            setFormMessage(loginForm, "error", "An error occurred during login.");
+    // Snap element to cursor
+    document.addEventListener('mousemove', moveElementToMouse);
+
+    function moveElementToMouse(event){
+        const element = document.querySelector('.attach');
+
+        if(element){
+            element.style.left = `${event.clientX - 150}px`;
+            element.style.top = `${event.clientY - 30}px`;
         }
-    })
+    }
 
-    renewOptions.addEventListener('change', function() {
-        if (renewOptions.value !== "") {
-            // Get the selected option
-            const selectedOption = renewOptions.options[renewOptions.selectedIndex];
-
-            // Extract data attributes
-            const name = selectedOption.getAttribute('data-name');
-            const email = selectedOption.getAttribute('data-email');
-            const reason = selectedOption.getAttribute('data-reason');
-            const details = selectedOption.getAttribute('data-details');
-            const date = selectedOption.getAttribute('data-date');
-            const endDate = selectedOption.getAttribute('data-enddate');
-            const cost = selectedOption.getAttribute('data-cost');
-            const timeStamp = selectedOption.getAttribute('data-timestamp');
-            const id = selectedOption.getAttribute('data-id');
-
-            
-            document.getElementById('payment-submitted-by').textContent = `${name} (${email})`;
-            renewDetails.querySelector('.view-rec').href = '/view-receipt?id='+id.toString();
-            
-            // Clear and add items to the list
-            const renewRequestDetails = document.getElementById('renew-request-details');
-            renewRequestDetails.innerHTML = "";
-            const items = [`Reason: ${reason}`, `Details: ${details}`, `Date From: ${formatDate(date)}`, `Date To: ${formatDate(endDate)}`, `Total Cost: £${cost}`];
-            items.forEach(item => {
-                const li = document.createElement('li');
-                li.textContent = item;
-                renewRequestDetails.appendChild(li);
-            });
-            
-            document.getElementById('payment-submission-date').textContent = formatDate(timeStamp);
-
-            renewDetails.classList.add('show');
-        } else {
-            renewDetails.classList.remove('show');
-        }
+    // Popup quit
+    document.querySelector('.popup img').addEventListener('click', ()=>{
+        document.querySelector('.popup').style.display = 'none';
     });
-
-    document.getElementById('renew-approve-btn').addEventListener('click', async()=>{
-        try {
-            // Get the ID
-            const id = renewOptions.options[renewOptions.selectedIndex].getAttribute('data-id');;
-    
-            // Perform your AJAX/Fetch login
-            const request = await fetch("/api/form/renew", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ id })
-            });
-    
-            // Check if the request was successful
-            if (!request.ok) {
-                throw new Error('Network response was not ok');
-            }
-    
-            // Parse the response as JSON
-            const response = await request.json();
-    
-            // Check for errors in the response and set the form message accordingly
-            if (response.error) {
-                alert(response.error);
-            } else {
-                alert('Success');
-                window.location.reload();
-            }
-        } catch (error) {
-            console.error('There was a problem with the fetch operation:', error);
-            setFormMessage(loginForm, "error", "An error occurred during login.");
-        }
-    })
 });
+function openPopup(element){
+    // Show the popup
+    document.querySelector('.popup').style.display = 'block';
 
+    // Extract data attributes
+    const name = element.getAttribute('data-name');
+    const email = element.getAttribute('data-email');
+    const reason = element.getAttribute('data-reason');
+    const details = element.getAttribute('data-details');
+    const date = element.getAttribute('data-date');
+    const endDate = element.getAttribute('data-enddate');
+    const cost = element.getAttribute('data-cost');
+    const timeStamp = element.getAttribute('data-timestamp');
+    const id = element.getAttribute('data-id');
+    const comment = element.getAttribute('data-comment');
 
+    document.querySelector('.popup .title').textContent = reason;
+    document.querySelector('.popup .content').innerHTML = 
+   `<b>Submitted By:</b> ${name} (${email}) <br>
+    <b>Reason:</b> ${reason} <br>
+    <b>Details:</b> ${details} <br>
+    <b>Date From:</b> ${formatDate(date)} <br>
+    <b>Date To:</b> ${formatDate(endDate)} <br>
+    <b>Total Cost:</b> ${cost} <br>
+    <b>Comment:</b> ${comment} <br>
+    <b>Submission Date:</b> ${formatDate(timeStamp)} <br>
+    <a href="/view-receipt?id=${id}">View Receipts</a>`;
+}
+function getClosestElement(elements, cursorX, cursorY) {
+    return Array.from(elements).reduce((closest, el) => {
+      const rect = el.getBoundingClientRect();
+      const elX = (rect.left + rect.right) / 2;
+      const elY = (rect.top + rect.bottom) / 2;
+      const distance = Math.hypot(cursorX - elX, cursorY - elY);
+      return !closest || distance < closest.distance ? { el, distance } : closest;
+    }, null).el;
+}
 function formatDate(dateString) {
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     const suffixes = ["th", "st", "nd", "rd"];
@@ -218,4 +139,32 @@ function formatDate(dateString) {
     
     // Construct the final formatted date string
     return `${month} ${day}${daySuffix} ${year} ${hours12}:${formattedMinutes} ${period}`;
+}
+async function opperation(id, op){
+    try {
+        // Perform your AJAX request
+        const request = await fetch("/api/form/"+op, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ id })
+        });
+
+        // Check if the request was successful
+        if (!request.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        // Parse the response as JSON
+        const response = await request.json();
+
+        // Check for errors in the response and set the form message accordingly
+        if (response.error) {
+            alert(response.error);
+        }
+    } catch (error) {
+        console.error('There was a problem with the fetch operation:', error);
+        alert(error);
+    }
 }
