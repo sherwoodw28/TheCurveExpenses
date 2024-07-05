@@ -13,7 +13,7 @@
         <a href="/dashboard"><img src="https://site-assets.fontawesome.com/releases/v6.5.2/svgs/solid/chevron-left.svg" width="10" alt=""></a>
         <form id="form">
             <p id="message"></p>
-            <label for="reason">Reason for Request: <span style="color: red;">*</span></label>
+            <label for="reason">Request Title: <span style="color: red;">*</span></label>
             <input type="text" id="reason" name="reason" required>
             
             <label for="details">Full Details of Request: <span style="color: red;">*</span><br>(starting location, destination time, transport required, etc)</label>
