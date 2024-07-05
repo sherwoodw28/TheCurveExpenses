@@ -171,4 +171,7 @@ header .profile-picture {
     padding: 20px;
     font-size: 20px;
     line-height: 40px;
+    overflow-y: scroll;
+    position: relative;
+    max-height: 439px;
 }
